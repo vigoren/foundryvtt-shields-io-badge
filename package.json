@@ -1,0 +1,11 @@
+{
+  "name": "foundryvtt-shields-io-badge",
+  "description": "An API endpoint for generating minimum and compatible FoundryVTT version badges.",
+  "author": "Dean Vigoren (vigorator)",
+  "keywords": [
+    "foundryvtt",
+    "foundry-vtt"
+  ],
+  "license": "MIT",
+  "devDependencies": {}
+}
