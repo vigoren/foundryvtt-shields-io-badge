@@ -33,6 +33,7 @@
   "homepage": "https://github.com/vigoren/foundryvtt-shields-io-badge#readme",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -b & node ./dist/index.js"
+    "build": "tsc -b",
+    "run": "node ./dist/index.js"
   }
 }
