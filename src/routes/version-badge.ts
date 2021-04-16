@@ -26,8 +26,7 @@ export default class VersionBadge extends Route{
             message: '',
             color: FoundryOrange,
             labelColor: FoundryGrey,
-            logoSvg: FoundrySVG,
-            logoColor: "#000000"
+            logoSvg: FoundrySVG
         };
         let moduleUrl = '';
 
