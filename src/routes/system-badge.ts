@@ -1,50 +1,47 @@
 import Route from "../classes/route.js";
 import {FoundryGrey, FoundryOrange, FoundrySVG, MethodTypes} from "../constants.js";
-import {ShieldIOResponse} from "../interfaces";
 import express from "express";
+import {ShieldIOResponse} from "../interfaces";
 
-
-export default class VersionBadge extends Route{
-
+export default class SystemBadge extends Route{
     constructor() {
         super();
 
         this.methods.push({
             type: MethodTypes.GET,
-            key: 'version',
+            key: 'system',
             parameters: '',
-            callback: this.version.bind(this)
+            callback: this.system.bind(this)
         });
     }
 
-    async version(req: express.Request, res: express.Response){
+    async system(req: express.Request, res: express.Response){
         const shieldIo: ShieldIOResponse = {
             schemaVersion: 1,
-            label: 'Supported Foundry Version',
+            label: 'Required System',
             message: '',
             color: FoundryOrange,
             labelColor: FoundryGrey,
             logoSvg: FoundrySVG
         };
         let moduleUrl = this.parseModuleUrl(req);
-
         if(moduleUrl){
             const moduleJson = await this.getModuleJson(moduleUrl);
-            let min = moduleJson.minimumCoreVersion.trim(), compatible = '';
-            if(moduleJson.compatibleCoreVersion){
-                compatible = moduleJson.compatibleCoreVersion.trim();
+            if(moduleJson.systems !== undefined){
+                let message;
+                if(Array.isArray(moduleJson.systems)){
+                    message = moduleJson.systems.join(', ');
+                } else {
+                    message = moduleJson.systems;
+                }
+                shieldIo.message = message;
+            } else if(moduleJson.system !== undefined){
+                shieldIo.message = moduleJson.system;
             }
-
-            if(min !== ''){
-                shieldIo.message = min;
-            }
-
-            if(compatible !== '' && compatible !== min){
-                shieldIo.message = `${shieldIo.message} - ${compatible}`;
-                shieldIo.label = 'Supported Foundry Versions';
+            else {
+                shieldIo.message = 'No system required.'
             }
         }
-
         if(shieldIo.message === '') {
             shieldIo.message = 'Error getting information.';
         }

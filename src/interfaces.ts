@@ -1,6 +1,66 @@
 import {MethodTypes} from "./constants";
 import express from "express";
 
+export namespace FoundryVTT {
+
+    export namespace Manifest{
+        export interface Pack {
+            name: string;
+            label: string;
+            system: string;
+            path: string;
+            entity: string;
+        }
+
+        export interface Dependency{
+            name: string;
+            type?: string;
+            manifest?: string;
+        }
+
+        export interface Language {
+            lang: string;
+            name: string;
+            path: string;
+        }
+
+        export interface Author {
+            name: string;
+            email?: string;
+            url?: string;
+        }
+
+        export interface Json {
+            name: string;
+            title: string;
+            description: string;
+            version: string;
+            author: string;
+            minimumCoreVersion: string;
+            compatibleCoreVersion?: string;
+            scripts?: string[];
+            esmodules?: string[];
+            styles?: string[];
+            packs?: FoundryVTT.Manifest.Pack[];
+            dependencies?: FoundryVTT.Manifest.Dependency[];
+            languages?: FoundryVTT.Manifest.Language[];
+            systems?: string[];
+            system?: string;
+            authors?: FoundryVTT.Manifest.Author[];
+            socket?: boolean;
+            url?: string;
+            manifest?: string;
+            download?: string;
+            license?: string;
+            readme?: string;
+            bugs?: string;
+            changelog?: string;
+        }
+    }
+}
+
+
+
 export interface ShieldIOResponse {
     schemaVersion: 1;
     label: string;
