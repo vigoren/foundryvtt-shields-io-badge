@@ -23,10 +23,10 @@ export default class Route{
             const method = this.methods[i];
             switch (method.type) {
                 case MethodTypes.GET:
-                    server.app.get(`/api/${method.key}/${method.parameters? method.parameters : ':query?'}`, method.callback);
+                    server.app.get(`/${method.key}/${method.parameters? method.parameters : ':query?'}`, method.callback);
                     break;
                 case MethodTypes.POST:
-                    server.app.post(`/api/${method.key}`, method.callback);
+                    server.app.post(`/${method.key}`, method.callback);
                     break;
                 default:
                     break;

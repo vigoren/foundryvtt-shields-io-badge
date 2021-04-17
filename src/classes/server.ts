@@ -1,5 +1,6 @@
 import express from "express";
 import VersionBadge from "../routes/version-badge.js";
+import path from "path";
 
 /**
  * The server class for this service
@@ -40,6 +41,11 @@ export default class Server{
      * Used to initialize all of the routes
      */
     initializeRoutes(){
+        this.app.get('/', (req: express.Request, res: express.Response) => {
+            res.sendFile(path.resolve('./src/pages/index.html'));
+        });
+        this.app.use('/assets', express.static('./src/assets'));
+
         const vb = new VersionBadge();
         vb.initialize(this);
     }

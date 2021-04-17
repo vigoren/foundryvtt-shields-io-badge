@@ -14,7 +14,7 @@ export default class VersionBadge extends Route{
         this.methods.push({
             type: MethodTypes.GET,
             key: 'version',
-            parameters: ':moduleUrl?',
+            parameters: '',
             callback: this.version.bind(this)
         });
     }
