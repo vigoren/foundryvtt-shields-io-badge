@@ -14,13 +14,13 @@ You can use this repository to host your own instance if you would prefer.
 
 ### Supported Foundry Version
 
-Some FoundryVTT modules support more than one version of core foundry. This badge provides a simple way to display that on your projects read me page. All you need is a link to your current manifest file.
+Some FoundryVTT modules support more than one version of core foundry. This badge provides a simple way to display that on your projects read me page. All you need is a link to your current module.json file.
 
-This badge checks the values of `minimumCoreVersion` and `compatibleCoreVersion` in the Foundry manifest file. If they are the same or one is missing only one will be shown otherwise the range between the two values will be shown.
+This badge checks the values of `minimumCoreVersion` and `compatibleCoreVersion` in the Foundry module.json file. If they are the same or one is missing only one will be shown otherwise the range between the two values will be shown.
 
-The URL to use for this is `https://foundryshields.com/version?url=:LinkToManifest`
+The URL to use for this is `https://foundryshields.com/version?url=:LinkToModulejson`
 
-Simply replace :LinkToManifest with the actual link to your manifest to generate the JSON used by ShieldsIO to generate a badge. The final URL to ShieldsIO would look like `https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=:LinkToManifest`
+Simply replace :LinkToModulejson with the actual link to your module.json to generate the JSON used by ShieldsIO to generate a badge. The final URL to ShieldsIO would look like `https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=:LinkToModulejson`
 
 #### Examples
 
