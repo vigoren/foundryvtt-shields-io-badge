@@ -4,7 +4,7 @@
 
 # FoundryVTT ShieldsIO Badges
 
-This repository provides a basic server that can be used to generate ShieldsIO badges for your own Foundry project read me pages.
+This repository provides a basic service that can be used to generate ShieldsIO badges for your own Foundry project read me pages.
 
 This project is hosted at [https://foundryshields.com/](https://foundryshields.com/) to provide free access to generating the endpoint JSON that can then be used by [ShieldsIO endpoint route](https://shields.io/endpoint).
 
