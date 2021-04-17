@@ -1,6 +1,7 @@
 import express from "express";
 import VersionBadge from "../routes/version-badge.js";
 import path from "path";
+import SystemBadge from "../routes/system-badge.js";
 
 /**
  * The server class for this service
@@ -48,5 +49,8 @@ export default class Server{
 
         const vb = new VersionBadge();
         vb.initialize(this);
+
+        const sb = new SystemBadge();
+        sb.initialize(this);
     }
 }

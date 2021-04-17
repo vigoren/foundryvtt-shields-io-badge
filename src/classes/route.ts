@@ -1,6 +1,9 @@
-import {Method} from "../interfaces";
+import {FoundryVTT, Method} from "../interfaces";
 import Server from "./server.js";
 import {MethodTypes} from "../constants.js";
+import {URL} from "url";
+import fetch from "node-fetch";
+import express from "express";
 
 /**
  * Base Route class
@@ -32,6 +35,43 @@ export default class Route{
                     break;
             }
 
+        }
+    }
+
+    parseModuleUrl(req: express.Request){
+        let moduleUrl = '';
+        if(req.query && req.query.hasOwnProperty('url')){
+            const queryUrl = req.query['url'];
+            if(queryUrl){
+                if(Array.isArray(queryUrl)){
+                    moduleUrl = queryUrl.join('');
+                } else {
+                    moduleUrl = queryUrl.toString();
+                }
+            }
+        }
+        return moduleUrl;
+    }
+
+    /**
+     * Returns the contents of the module json from the URL
+     * @param moduleUrl
+     */
+    async getModuleJson(moduleUrl: string): Promise<FoundryVTT.Manifest.Json>{
+        try{
+            const url = new URL(moduleUrl);
+            const fResponse = await fetch(url);
+            return await fResponse.json();
+        } catch (e){
+            console.error(`${(<Error>e).message}`);
+            return {
+                name: '',
+                title: '',
+                description: '',
+                version: '',
+                author: '',
+                minimumCoreVersion: ''
+            };
         }
     }
 }
