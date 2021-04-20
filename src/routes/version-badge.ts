@@ -29,6 +29,7 @@ export default class VersionBadge extends Route{
         let moduleUrl = this.parseModuleUrl(req);
 
         if(moduleUrl){
+            console.log(`Loading Data From: "${moduleUrl}"`);
             const moduleJson = await this.getModuleJson(moduleUrl);
             let min = moduleJson.minimumCoreVersion.trim(), compatible = '';
             if(moduleJson.compatibleCoreVersion){
