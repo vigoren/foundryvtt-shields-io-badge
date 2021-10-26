@@ -1,6 +1,11 @@
 # Change Log
 
-## v.1.0.1 - Fixes
+## 1.0.2 - Bug Fix
+
+- Fixed a bug where manifests that included numbers for compatible versions would fail to load properly.
+
+
+## v1.0.1 - Fixes
 
 A small fix with this release:
 
