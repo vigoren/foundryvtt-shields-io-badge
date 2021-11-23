@@ -27,6 +27,7 @@ export default class Server{
     constructor(port: number | string) {
         this.port = port;
         this.app = express();
+        // @ts-ignore
         this.app.use(express.json());
     }
 
