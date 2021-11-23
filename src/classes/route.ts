@@ -60,8 +60,8 @@ export default class Route{
     async getModuleJson(moduleUrl: string): Promise<FoundryVTT.Manifest.Json>{
         try{
             const url = new URL(moduleUrl);
-            const fResponse = await fetch(url);
-            return await fResponse.json();
+            const fResponse = await fetch(url.toString());
+            return <Promise<FoundryVTT.Manifest.Json>> await fResponse.json();
         } catch (e){
             console.error(`${(<Error>e).message}`);
             return {

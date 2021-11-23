@@ -41,7 +41,13 @@ export default class VersionBadge extends Route{
             }
 
             if(compatible !== '' && compatible !== min){
-                shieldIo.message = `${shieldIo.message} - ${compatible}`;
+                const minVal = parseFloat(min);
+                const compatVal = parseFloat(compatible);
+                if(minVal > compatVal && compatVal % 1 === 0 && Math.trunc(minVal) === compatVal){
+                    shieldIo.message = `${min}+`;
+                } else {
+                    shieldIo.message = `${shieldIo.message} - ${compatible}`;
+                }
                 shieldIo.label = 'Supported Foundry Versions';
             }
         }
