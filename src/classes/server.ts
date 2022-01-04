@@ -2,6 +2,7 @@ import express from "express";
 import VersionBadge from "../routes/version-badge.js";
 import path from "path";
 import SystemBadge from "../routes/system-badge.js";
+import {RequestHandler} from "express/ts4.0";
 
 /**
  * The server class for this service
@@ -27,8 +28,7 @@ export default class Server{
     constructor(port: number | string) {
         this.port = port;
         this.app = express();
-        // @ts-ignore
-        this.app.use(express.json());
+        this.app.use(<RequestHandler>express.json());
     }
 
     /**
