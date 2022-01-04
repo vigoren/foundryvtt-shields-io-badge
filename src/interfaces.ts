@@ -55,6 +55,11 @@ export namespace FoundryVTT {
             readme?: string;
             bugs?: string;
             changelog?: string;
+            //World.json Specific properties
+            background?: string;
+            coreVersion?: string;
+            nextSession?: string;
+            systemVersion?: string;
         }
     }
 }

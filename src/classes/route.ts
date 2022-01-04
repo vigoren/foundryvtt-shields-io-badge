@@ -70,7 +70,8 @@ export default class Route{
                 description: '',
                 version: '',
                 author: '',
-                minimumCoreVersion: ''
+                minimumCoreVersion: '',
+
             };
         }
     }
