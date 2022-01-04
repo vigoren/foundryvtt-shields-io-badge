@@ -34,6 +34,8 @@ export default class VersionBadge extends Route{
             let min = '', compatible = '';
             if(moduleJson.hasOwnProperty('minimumCoreVersion')){
                 min = moduleJson.minimumCoreVersion.toString().trim();
+            } else if(moduleJson.hasOwnProperty('coreVersion') && moduleJson.coreVersion){
+                min = moduleJson.coreVersion.toString().trim();
             }
             if(moduleJson.hasOwnProperty('compatibleCoreVersion') && moduleJson.compatibleCoreVersion){
                 compatible = moduleJson.compatibleCoreVersion.toString().trim();
