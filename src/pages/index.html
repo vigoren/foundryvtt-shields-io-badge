@@ -2,10 +2,358 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Foundry Shields</title>
+    <link rel="icon" href="/assets/favicon.svg" sizes="any" type="image/svg+xml">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
+    <style>
+        .navbar .navbar-brand{
+            padding: 0;
+        }
+        .navbar .navbar-brand img{
+            height: 50px;
+        }
+        .masthead{
+            background: linear-gradient(185deg, #FEF4EE 50%, #fff 50%);
+        }
+        a, .nav-link{
+            color:#F4690F;
+        }
+        a:hover, .nav-link:focus, .nav-link:hover{
+            color: #C35409;
+        }
+        .nav-link{
+            font-weight: 600;
+        }
+        .nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+            background-color: #F4690F;
+        }
+        .bg-burnt-orange{
+            background-color: #351703;
+        }
+        .bg-grey{
+            background-color: #efefef;
+        }
+        pre{
+            scrollbar-width: thin;
+            color: #d63384;
+        }
+        pre::-webkit-scrollbar{
+            width: 3px;
+            height: 3px;
+        }
+        pre::-webkit-scrollbar-thumb {
+            background: #CED4DAFF;
+            border-radius: 5px;
+        }
+        footer{
+            font-size: 0.875rem;
+        }
+        footer .list-group{
+            max-width: 410px;
+        }
+        footer .list-group-item{
+            background-color: transparent;
+        }
+        .list-group-item.no-content{
+            border-bottom-width: 0;
+        }
+    </style>
 </head>
 <body>
-<h1>Foundry Shields</h1>
-<p>Please check out the <a href="https://github.com/vigoren/foundryvtt-shields-io-badge">Github repository</a> for instructions on how to use!</p>
+    <nav class="navbar navbar-dark bg-burnt-orange">
+        <div class="container">
+            <a class="navbar-brand" href="#"><img src="/assets/foundry-shield-logo.svg" alt="Foundry Shields" /></a>
+            <a class="d-flex bi bi-github link-light text-decoration-none fs-3" href="https://github.com/vigoren/foundryvtt-shields-io-badge" title="View on GitHub"></a>
+        </div>
+    </nav>
+    <div class="masthead">
+        <div class="container pt-5 pb-3">
+            <div class="col">
+                <h1>Foundry Shields</h1>
+                <p>Foundry Shields is a free service that can be used by developers of <a href="https://foundryvtt.com/" target="_blank">FoundryVTT</a> systems, modules and worlds to generate <a href="https://shields.io/" target="_blank">shields.io</a> badges for their projects.</p>
+                <p>Choose the type of badge you wish to create from the list below, follow the instructions and the site will generate the URL to use for your very own custom badge!</p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col">
+                <div class="">
+                    <!-- Nav tabs -->
+                    <div class="nav nav-pills" id="badgeTabs" role="tablist">
+                        <button class="nav-link active me-3" id="foundry-version-tab" data-bs-toggle="tab" data-bs-target="#foundry-version" type="button" role="tab" aria-controls="foundry-version" aria-selected="true">Supported Foundry Version</button>
+                        <button class="nav-link" id="game-system-tab" data-bs-toggle="tab" data-bs-target="#game-system" type="button" role="tab" aria-controls="game-system" aria-selected="false">Supported Game System</button>
+                    </div>
+                    <!-- Tab panes -->
+                    <div class="tab-content my-2 p-2 border-top">
+                        <div class="tab-pane fade show active" id="foundry-version" role="tabpanel" aria-labelledby="foundry-version-tab">
+                            <h3>Supported Foundry Version Badge</h3>
+                            <p>This badge provides a simple way to display which version (or versions) of FoundryVTT core your System, Module or World supports. All you need is a link to the manifest file!</p>
+                            <p>Choose what you are generating a badge for:</p>
+                            <div class="nav nav-pills" id="foundryVersionTabs" role="tablist">
+                                <button class="nav-link me-3" id="foundry-version-system-tab" data-bs-toggle="tab" data-bs-target="#foundry-version-system" type="button" role="tab" aria-controls="foundry-version-system" aria-selected="false">System</button>
+                                <button class="nav-link active me-3" id="foundry-version-module-tab" data-bs-toggle="tab" data-bs-target="#foundry-version-module" type="button" role="tab" aria-controls="foundry-version-module" aria-selected="true">Module</button>
+                                <button class="nav-link" id="foundry-version-world-tab" data-bs-toggle="tab" data-bs-target="#foundry-version-world" type="button" role="tab" aria-controls="foundry-version-world" aria-selected="false">World</button>
+                            </div>
+                            <div class="tab-content my-2 p-2 border">
+                                <div class="tab-pane fade" id="foundry-version-system" role="tabpanel" aria-labelledby="foundry-version-system-tab">
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <h4>For Systems</h4>
+                                            <p>This badge checks the values of <code>minimumCoreVersion</code> and <code>compatibleCoreVersion</code> in the system.json file. If they are the same or one is missing, one supported version will be shown. Otherwise, the range between the two supported versions will be shown.</p>
+                                            <p>For details about setting up a FoundryVTT system check out the <a href="https://foundryvtt.com/article/system-development/" target="_blank">system documentation</a>. For details on how FoundryVTT does its versioning check the <a href="https://foundryvtt.com/article/versioning/" target="_blank">versioning documentation</a>.</p>
+                                            <hr/>
+                                            <h4>Examples</h4>
+                                            <p class="mt-0 mb-2">When your system only supports one version of FoundryVTT (both the minimumCoreVersion and compatibleCoreVersion are the same)</p>
+                                            <img alt="Same Version Badge" src="https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=https://raw.githubusercontent.com/vigoren/foundryvtt-shields-io-badge/main/examples/module-system-single-version.json">
+                                            <pre class="mt-2"><code>https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=https://raw.githubusercontent.com/vigoren/foundryvtt-shields-io-badge/main/examples/module-system-single-version.json</code></pre>
+                                            <p class="mt-3 mb-2">When your system supports a range of versions of FoundryVTT (the minimumCoreVersion and compatibleCoreVersion are different)</p>
+                                            <img alt="Version Range Badge" src="https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=https://raw.githubusercontent.com/vigoren/foundryvtt-shields-io-badge/main/examples/module-system-version-range.json">
+                                            <pre class="mt-2"><code>https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=https://raw.githubusercontent.com/vigoren/foundryvtt-shields-io-badge/main/examples/module-system-version-range.json</code></pre>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <hr class="d-md-none"/>
+                                            <h4>Create Your Own Badge!</h4>
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control version-badge-link" id="systemLink" placeholder="Link to system.json">
+                                                <label for="systemLink">Link to system.json</label>
+                                            </div>
+                                            <div class="alert alert-info d-flex align-items-center" role="alert">
+                                                <i class="bi bi-info-circle-fill me-2 fs-3"></i>
+                                                <div>
+                                                    This will be a link to the system.json in your repository (GitHub, Gitlab, Bitbucket, etc) from either the main branch or a specific release.<br/>Be sure to link from the raw view of the file to ensure it can be processed properly!
+                                                </div>
+                                            </div>
+                                            <div class="custom-results d-none">
+                                                <p>Here is a preview of and link to your Supported Version Badge!</p>
+                                                <div class="user-select-all border my-2 p-2 bg-grey text-break"></div>
+                                                <img alt="Custom Module Version" src="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane active fade show" id="foundry-version-module" role="tabpanel" aria-labelledby="foundry-version-module-tab">
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <h4>For Modules</h4>
+                                            <p>This badge checks the values of <code>minimumCoreVersion</code> and <code>compatibleCoreVersion</code> in the module.json file. If they are the same or one is missing, one supported version will be shown. Otherwise, the range between the two supported versions will be shown.</p>
+                                            <p>For details about setting up a FoundryVTT module check out the <a href="https://foundryvtt.com/article/module-development/" target="_blank">module documentation</a>. For details on how FoundryVTT does its versioning check the <a href="https://foundryvtt.com/article/versioning/" target="_blank">versioning documentation</a>.</p>
+                                            <hr/>
+                                            <h4>Examples</h4>
+                                            <p class="mt-0 mb-2">When your module only supports one version of FoundryVTT (both the minimumCoreVersion and compatibleCoreVersion are the same)</p>
+                                            <img alt="Same Version Badge" src="https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=https://raw.githubusercontent.com/vigoren/foundryvtt-shields-io-badge/main/examples/module-system-single-version.json">
+                                            <pre class="mt-2"><code>https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=https://raw.githubusercontent.com/vigoren/foundryvtt-shields-io-badge/main/examples/module-system-single-version.json</code></pre>
+                                            <p class="mt-3 mb-2">When your module supports a range of versions of FoundryVTT (the minimumCoreVersion and compatibleCoreVersion are different)</p>
+                                            <img alt="Version Range Badge" src="https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=https://raw.githubusercontent.com/vigoren/foundryvtt-shields-io-badge/main/examples/module-system-version-range.json">
+                                            <pre class="mt-2"><code>https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=https://raw.githubusercontent.com/vigoren/foundryvtt-shields-io-badge/main/examples/module-system-version-range.json</code></pre>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <hr class="d-md-none"/>
+                                            <h4>Create Your Own Badge!</h4>
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control version-badge-link" id="moduleLink" placeholder="Link to module.json">
+                                                <label for="moduleLink">Link to module.json</label>
+                                            </div>
+                                            <div class="alert alert-info d-flex align-items-center" role="alert">
+                                                <i class="bi bi-info-circle-fill me-2 fs-3"></i>
+                                                <div>
+                                                    This will be a link to the module.json in your repository (GitHub, Gitlab, Bitbucket, etc) from either the main branch or a specific release.<br/>Be sure to link from the raw view of the file to ensure it can be processed properly!
+                                                </div>
+                                            </div>
+                                            <div class="custom-results d-none">
+                                                <p>Here is a preview of and link to your Supported Version Badge!</p>
+                                                <div class="user-select-all border my-2 p-2 bg-grey text-break"></div>
+                                                <img alt="Custom Module Version" src="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="foundry-version-world" role="tabpanel" aria-labelledby="foundry-version-world-tab">
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <h4>For Worlds</h4>
+                                            <p>This badge checks the value of <code>coreVersion</code> in the world.json file and will show the supported FoundryVTT version.</p>
+                                            <p>For details on how FoundryVTT does its versioning check the <a href="https://foundryvtt.com/article/versioning/" target="_blank">versioning documentation</a>.</p>
+                                            <hr/>
+                                            <h4>Examples</h4>
+                                            <img alt="World Version Badge" src="https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=https://raw.githubusercontent.com/vigoren/foundryvtt-shields-io-badge/main/examples/world.json">
+                                            <pre class="mt-3"><code>https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=https://raw.githubusercontent.com/vigoren/foundryvtt-shields-io-badge/main/examples/world.json</code></pre>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <hr class="d-md-none"/>
+                                            <h4>Create Your Own Badge!</h4>
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control version-badge-link" id="worldLink" placeholder="Link world.json">
+                                                <label for="worldLink">Link to world.json</label>
+                                            </div>
+                                            <div class="alert alert-info d-flex align-items-center" role="alert">
+                                                <i class="bi bi-info-circle-fill me-2 fs-3"></i>
+                                                <div>
+                                                    This will be a link to the world.json in your repository (GitHub, Gitlab, Bitbucket, etc) from either the main branch or a specific release.<br/>Be sure to link from the raw view of the file to ensure it can be processed properly!
+                                                </div>
+                                            </div>
+                                            <div class="custom-results d-none">
+                                                <p>Here is a preview of and link to your Supported Version Badge!</p>
+                                                <div class="user-select-all border my-2 p-2 bg-grey text-break"></div>
+                                                <img alt="Custom Module Version" src="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="game-system" role="tabpanel" aria-labelledby="game-system-tab">
+                            <h3>Supported Game System</h3>
+                            <p>This badge provides a simple way to display which FoundryVTT game system(s) your module or world is built for. All you need is a link to the manifest file!</p>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <h4>Details</h4>
+                                    <p>This badge will check the value of <code>systems</code> or <code>system</code> in the Foundry module.json or world.json file.</p>
+                                    <p>For details about specifying specific systems for a module check out the <a href="https://foundryvtt.com/article/module-development/" target="_blank">module documentation</a>.</p>
+                                    <p>You can also specify how the name of the system is displayed. This only works for the top used game systems in Foundry. You can choose from:</p>
+                                    <ul class="list-group">
+                                        <li class="list-group-item"><strong>Full</strong>: The full name of the Game System that could be found eg. <code>Pathfinder 2nd Edition</code></li>
+                                        <li class="list-group-item"><strong>Foundry</strong>: The full name of the Game System as set in FoundryVTT's System list eg. <code>Pathfinder 2e</code></li>
+                                        <li class="list-group-item"><strong>Short</strong>: The shorthand for the Game System eg. <code>PF2e</code></li>
+                                        <li class="list-group-item"><strong>Raw</strong>: How the system names itself in code eg. <code>pf2e</code></li>
+                                    </ul>
+                                    <hr/>
+                                    <h4>Examples</h4>
+                                    <p class="mt-0 mb-2">Different game system name displays</p>
+                                    <img alt="World Version Badge Full Name" src="https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fsystem%3FnameType%3Dfull%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2Fvigoren%2Ffoundryvtt-shields-io-badge%2Fmain%2Fexamples%2Fworld.json">
+                                    <pre class="mt-2"><code>https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fsystem%3FnameType%3Dfull%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2Fvigoren%2Ffoundryvtt-shields-io-badge%2Fmain%2Fexamples%2Fworld.json</code></pre>
+                                    <img alt="World Version Badge Short Name" src="https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fsystem%3FnameType%3Dshort%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2Fvigoren%2Ffoundryvtt-shields-io-badge%2Fmain%2Fexamples%2Fworld.json">
+                                    <pre class="mt-2"><code>https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fsystem%3FnameType%3Dshort%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2Fvigoren%2Ffoundryvtt-shields-io-badge%2Fmain%2Fexamples%2Fworld.json</code></pre>
+                                    <p class="mt-3 mb-2">A module that does require any specific game systems</p>
+                                    <img alt="World Version Badge Short Name" src="https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fsystem%3FnameType%3Dshort%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2Fvigoren%2Ffoundryvtt-shields-io-badge%2Fmain%2Fexamples%2Fmodule-system-single-version.json">
+                                    <pre class="mt-2"><code>https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fsystem%3FnameType%3Dshort%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2Fvigoren%2Ffoundryvtt-shields-io-badge%2Fmain%2Fexamples%2Fmodule-system-single-version.json</code></pre>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <hr class="d-md-none"/>
+                                    <h4>Create Your Own Badge!</h4>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control system-badge-link" id="gsLink" placeholder="Link to module.json or world.json">
+                                        <label for="gsLink">Link to module.json or world.json</label>
+                                    </div>
+                                    <div class="alert alert-info d-flex align-items-center" role="alert">
+                                        <i class="bi bi-info-circle-fill me-2 fs-3"></i>
+                                        <div>
+                                            This will be a link to the module.json or world.json in your repository (GitHub, Gitlab, Bitbucket, etc) from either the main branch or a specific release.<br/>Be sure to link from the raw view of the file to ensure it can be processed properly!
+                                        </div>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="gameSystemDisplay" aria-label="Game System Name Display">
+                                            <option selected value="full">Full</option>
+                                            <option value="foundry">Foundry</option>
+                                            <option value="short">Short</option>
+                                            <option value="raw">Raw</option>
+                                        </select>
+                                        <label for="gameSystemDisplay">Game System Name Display</label>
+                                    </div>
+                                    <div class="custom-results d-none">
+                                        <p>Here is a preview of and link to your Supported Game Systems Badge!</p>
+                                        <div class="user-select-all border my-2 p-2 bg-grey text-break"></div>
+                                        <img alt="Custom Module Game System Badge" src="" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-grey border-top mt-5 py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-4 d-flex flex-column align-items-start">
+                    <a href="https://github.com/vigoren/foundryvtt-shields-io-badge/issues">Issues / Suggestions</a>
+                    <a href="https://github.com/vigoren/foundryvtt-shields-io-badge/blob/main/CHANGELOG.md">Change Log</a>
+                    <span>Version: 1.1.0</span>
+                </div>
+                <div class="col-12 col-md-4 d-flex flex-column align-items-center">
+                    <span>Foundry Shields is not affiliated with FoundryVTT in any way.</span>
+                    <span>Created by <a href="https://vig.vg">Dean Vigoren</a> © <span id="copyright">2022</span></span>
+                </div>
+                <div class="col-12 col-md-4 d-flex flex-column align-items-end">
+                    <span class="mb-2">Love the tool? Consider supporting me!</span>
+                    <a href="https://www.patreon.com/bePatron?u=585321" target="_blank" rel="noopener"><img src="https://img.shields.io/badge/Become%20a%20patron-%23FF424D?style=for-the-badge&amp;logo=patreon&amp;logoColor=white" alt="Become a Patron"></a>
+                    <a class="mt-2" href='https://ko-fi.com/A0A546HOX' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script>
+        document.getElementById('copyright').innerText = new Date().getFullYear().toString();
+        document.querySelectorAll('.version-badge-link').forEach(function(elm){
+            elm.addEventListener('change', versionBadgeLinkChange);
+            elm.addEventListener('onpaste', versionBadgeLinkChange);
+            elm.addEventListener('keyup', versionBadgeLinkChange);
+        });
+        document.querySelectorAll('.system-badge-link').forEach(function(elm){
+            elm.addEventListener('change', systemBadgeChange);
+            elm.addEventListener('onpaste', systemBadgeChange);
+            elm.addEventListener('keyup', systemBadgeChange);
+        });
+        document.getElementById('gameSystemDisplay').addEventListener('change', systemBadgeChange);
+
+        function versionBadgeLinkChange(e){
+            const elm = e.target;
+            if(elm){
+                const parent = elm.closest('.col-12');
+                if(parent){
+                    const results = parent.querySelector('.custom-results');
+                    if(elm.value){
+                        results.classList.remove('d-none');
+                        const url = `https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=${encodeURIComponent(elm.value)}`;
+                        const text = results.querySelector('div');
+                        if(text){
+                            text.innerText = url;
+                        }
+                        const img = results.querySelector('img');
+                        if(img){
+                            img.src = url;
+                        }
+
+                    } else {
+                        results.classList.add('d-none');
+                    }
+                }
+            }
+        }
+
+        function systemBadgeChange(e){
+            const elm = e.target;
+            if(elm){
+                const parent = elm.closest('.col-12');
+                if(parent){
+                    const results = parent.querySelector('.custom-results');
+                    const manifestUrl = document.getElementById('gsLink').value, nameType = document.getElementById('gameSystemDisplay').value;
+                    if(manifestUrl && nameType){
+                        results.classList.remove('d-none');
+                        const url = `https://img.shields.io/endpoint?url=${encodeURIComponent(`https://foundryshields.com/system?nameType=${nameType}&url=${manifestUrl}`)}`;
+                        const text = results.querySelector('div');
+                        if(text){
+                            text.innerText = url;
+                        }
+                        const img = results.querySelector('img');
+                        if(img){
+                            img.src = url;
+                        }
+
+                    } else {
+                        results.classList.add('d-none');
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 </html>

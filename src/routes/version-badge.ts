@@ -2,6 +2,7 @@ import Route from "../classes/route.js";
 import {FoundryGrey, FoundryOrange, FoundrySVG, MethodTypes} from "../constants.js";
 import {ShieldIOResponse} from "../interfaces";
 import express from "express";
+import Logger from "../logger.js";
 
 
 export default class VersionBadge extends Route{
@@ -29,7 +30,7 @@ export default class VersionBadge extends Route{
         let moduleUrl = this.parseModuleUrl(req);
 
         if(moduleUrl){
-            console.log(`Loading Data From: "${moduleUrl}"`);
+            Logger.info(`Loading Data From: ${moduleUrl}`, {badgeData: {type: "VERSION", url: moduleUrl}});
             const moduleJson = await this.getModuleJson(moduleUrl);
             let min = '', compatible = '';
             if(moduleJson.hasOwnProperty('minimumCoreVersion')){

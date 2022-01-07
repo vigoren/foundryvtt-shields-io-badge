@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.1.0 - System Badge, Website
+
+- Added a new badge for showing which system/systems a world or module support. Check out the readme for more details on how to use it!
+- Updated the main landing page to allow for easy generation of the badges!
+  - Select which badge you want to create.
+  - Enter the URL for your system, module or world manifest.
+  - Copy the generated URL and use.
+
 ## 1.0.5 - World.json Support
 
 - Added support for world.json files to display the core version that was used to create the world.
