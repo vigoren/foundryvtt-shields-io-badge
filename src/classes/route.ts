@@ -4,6 +4,7 @@ import {MethodTypes} from "../constants.js";
 import {URL} from "url";
 import fetch from "node-fetch";
 import express from "express";
+import Logger from "../logger.js";
 
 /**
  * Base Route class
@@ -63,7 +64,7 @@ export default class Route{
             const fResponse = await fetch(url.toString());
             return <Promise<FoundryVTT.Manifest.Json>> await fResponse.json();
         } catch (e){
-            console.error(`${(<Error>e).message}`);
+            Logger.error((<Error>e).message);
             return {
                 name: '',
                 title: '',

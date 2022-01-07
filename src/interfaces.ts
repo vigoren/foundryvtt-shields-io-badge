@@ -64,7 +64,11 @@ export namespace FoundryVTT {
     }
 }
 
-
+export interface SystemNames {
+    full: string;
+    foundry: string;
+    short: string;
+}
 
 export interface ShieldIOResponse {
     schemaVersion: 1;

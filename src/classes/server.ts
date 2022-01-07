@@ -3,6 +3,7 @@ import VersionBadge from "../routes/version-badge.js";
 import path from "path";
 import SystemBadge from "../routes/system-badge.js";
 import {RequestHandler} from "express/ts4.0";
+import Logger from "../logger.js";
 
 /**
  * The server class for this service
@@ -35,7 +36,7 @@ export default class Server{
      * Starts the server
      */
     start(){
-        this.app.listen(this.port, () => {console.log('Server Started!')});
+        this.app.listen(this.port, () => {Logger.info('Server Started!', {})});
         this.initializeRoutes();
     }
 
