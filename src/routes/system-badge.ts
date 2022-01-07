@@ -96,7 +96,7 @@ export default class SystemBadge extends Route{
     getSystemName(key: string, req: express.Request){
         if(req.query && req.query.hasOwnProperty('nameType') &&  req.query['nameType']){
             let type = (Array.isArray(req.query['nameType'])? req.query['nameType'].join('') : req.query['nameType'].toString()).toLowerCase() as 'short' | 'full' | 'foundry';
-            if(this.systemPrettyNames[key]){
+            if(this.systemPrettyNames[key] && (<SystemNames>this.systemPrettyNames[key])[type]){
                 return (<SystemNames>this.systemPrettyNames[key])[type];
             }
         }
