@@ -32,10 +32,10 @@ class Logging{
         }
     }
 
-    public error(message: string){
+    public error(message: string, context: any){
         console.error(`[ERROR] ${message}`);
         if(this.logtail){
-            this.logtail.error(message).catch(console.error);
+            this.logtail.error(message, context).catch(console.error);
         }
     }
 }

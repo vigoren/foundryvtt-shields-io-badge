@@ -64,7 +64,7 @@ export default class Route{
             const fResponse = await fetch(url.toString());
             return <Promise<FoundryVTT.Manifest.Json>> await fResponse.json();
         } catch (e){
-            Logger.error((<Error>e).message);
+            Logger.error((<Error>e).message, {badgeData: {url: moduleUrl}});
             return {
                 name: '',
                 title: '',
