@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.1.1 - Dependency Update, Better Error Logs
+
+- Added some more details to any logged errors to make them a bit more useful.
+- Updated all dependencies to the latest versions.
+
 ## 1.1.0 - System Badge, Website
 
 - Added a new badge for showing which system/systems a world or module support. Check out the readme for more details on how to use it!
