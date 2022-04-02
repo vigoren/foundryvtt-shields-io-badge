@@ -46,6 +46,7 @@ export namespace FoundryVTT {
             languages?: FoundryVTT.Manifest.Language[];
             systems?: string[];
             system?: string;
+            minimumSystemVersion?: string | number;
             authors?: FoundryVTT.Manifest.Author[];
             socket?: boolean;
             url?: string;

@@ -1,7 +1,7 @@
 import Route from "../classes/route.js";
 import {FoundryGrey, FoundryOrange, FoundrySVG, MethodTypes} from "../constants.js";
 import express from "express";
-import {ShieldIOResponse, SystemNames} from "../interfaces";
+import {FoundryVTT, ShieldIOResponse, SystemNames} from "../interfaces";
 import Logger from "../logger.js";
 
 export default class SystemBadge extends Route{
@@ -103,6 +103,17 @@ export default class SystemBadge extends Route{
         return key;
     }
 
+    getSystemMinimumVersion(moduleJson: FoundryVTT.Manifest.Json, req: express.Request){
+        if(req.query && req.query.hasOwnProperty('showVersion') &&  req.query['showVersion']){
+            if(moduleJson.minimumSystemVersion){
+                return ` v${moduleJson.minimumSystemVersion.toString().trim()}+`;
+            } else if(moduleJson.systemVersion){
+                return ` v${moduleJson.systemVersion.toString().trim()}`;
+            }
+        }
+        return '';
+    }
+
     async system(req: express.Request, res: express.Response){
         const shieldIo: ShieldIOResponse = {
             schemaVersion: 1,
@@ -131,9 +142,9 @@ export default class SystemBadge extends Route{
                 } else {
                     message = this.getSystemName(moduleJson.systems, req);
                 }
-                shieldIo.message = message;
+                shieldIo.message = message + this.getSystemMinimumVersion(moduleJson, req);
             } else if(moduleJson.system !== undefined){
-                shieldIo.message = this.getSystemName(moduleJson.system, req);
+                shieldIo.message = this.getSystemName(moduleJson.system, req) + this.getSystemMinimumVersion(moduleJson, req);
             }
             else {
                 shieldIo.message = 'All';

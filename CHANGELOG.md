@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.2 - Game System Versions
+
+- Added a new options when generating Game System badges to show the version of the system that the module/world requires. 
+
 ## 1.1.1 - Dependency Update, Better Error Logs
 
 - Added some more details to any logged errors to make them a bit more useful.
