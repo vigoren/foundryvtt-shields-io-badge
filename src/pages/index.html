@@ -61,6 +61,21 @@
         .list-group-item.no-content{
             border-bottom-width: 0;
         }
+        .options{
+            position: relative;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 1rem 0.5rem;
+            margin-top: 1.5rem;
+        }
+        .options .options-label{
+            position: absolute;
+            top: -1rem;
+            padding: 0 0.25rem;
+            border: 1px solid #ced4da;
+            background-color: #ffffff;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -221,6 +236,8 @@
                                         <li class="list-group-item"><strong>Short</strong>: The shorthand for the Game System eg. <code>PF2e</code></li>
                                         <li class="list-group-item"><strong>Raw</strong>: How the system names itself in code eg. <code>pf2e</code></li>
                                     </ul>
+                                    <br/>
+                                    <p>You can also choose to include the version of the system that is required for the module/world. For modules this checks the <code>minimumSystemVersion</code> property of the module.json file. For worlds this checks the <code>systemVersion</code> property of the world.json file.</p>
                                     <hr/>
                                     <h4>Examples</h4>
                                     <p class="mt-0 mb-2">Different game system name displays</p>
@@ -228,6 +245,9 @@
                                     <pre class="mt-2"><code>https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fsystem%3FnameType%3Dfull%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2Fvigoren%2Ffoundryvtt-shields-io-badge%2Fmain%2Fexamples%2Fworld.json</code></pre>
                                     <img alt="World Version Badge Short Name" src="https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fsystem%3FnameType%3Dshort%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2Fvigoren%2Ffoundryvtt-shields-io-badge%2Fmain%2Fexamples%2Fworld.json">
                                     <pre class="mt-2"><code>https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fsystem%3FnameType%3Dshort%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2Fvigoren%2Ffoundryvtt-shields-io-badge%2Fmain%2Fexamples%2Fworld.json</code></pre>
+                                    <p class="mt-3 mb-2">A world that requires a specific version of the system</p>
+                                    <img alt="World Version Badge Short Name And System Version" src="https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fsystem%3FnameType%3Dshort%26showVersion%3D1%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2Fvigoren%2Ffoundryvtt-shields-io-badge%2Fmain%2Fexamples%2Fworld.json">
+                                    <pre class="mt-2"><code>https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fsystem%3FnameType%3Dshort%26showVersion%3D1%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2Fvigoren%2Ffoundryvtt-shields-io-badge%2Fmain%2Fexamples%2Fworld.json</code></pre>
                                     <p class="mt-3 mb-2">A module that does require any specific game systems</p>
                                     <img alt="World Version Badge Short Name" src="https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fsystem%3FnameType%3Dshort%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2Fvigoren%2Ffoundryvtt-shields-io-badge%2Fmain%2Fexamples%2Fmodule-system-single-version.json">
                                     <pre class="mt-2"><code>https://img.shields.io/endpoint?url=https%3A%2F%2Ffoundryshields.com%2Fsystem%3FnameType%3Dshort%26url%3Dhttps%3A%2F%2Fraw.githubusercontent.com%2Fvigoren%2Ffoundryvtt-shields-io-badge%2Fmain%2Fexamples%2Fmodule-system-single-version.json</code></pre>
@@ -245,14 +265,23 @@
                                             This will be a link to the module.json or world.json in your repository (GitHub, Gitlab, Bitbucket, etc) from either the main branch or a specific release.<br/>Be sure to link from the raw view of the file to ensure it can be processed properly!
                                         </div>
                                     </div>
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="gameSystemDisplay" aria-label="Game System Name Display">
-                                            <option selected value="full">Full</option>
-                                            <option value="foundry">Foundry</option>
-                                            <option value="short">Short</option>
-                                            <option value="raw">Raw</option>
-                                        </select>
-                                        <label for="gameSystemDisplay">Game System Name Display</label>
+                                    <div class="options">
+                                        <div class="options-label">Options</div>
+                                        <div class="options-content">
+                                            <div class="form-floating mb-3">
+                                                <select class="form-select" id="gameSystemDisplay" aria-label="Game System Name Display">
+                                                    <option selected value="full">Full</option>
+                                                    <option value="foundry">Foundry</option>
+                                                    <option value="short">Short</option>
+                                                    <option value="raw">Raw</option>
+                                                </select>
+                                                <label for="gameSystemDisplay">Game System Name Display</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="systemVersion" checked>
+                                                <label class="form-check-label" for="systemVersion">Include System Version</label>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="custom-results d-none">
                                         <p>Here is a preview of and link to your Supported Game Systems Badge!</p>
@@ -273,7 +302,7 @@
                 <div class="col-12 col-md-4 d-flex flex-column align-items-start">
                     <a href="https://github.com/vigoren/foundryvtt-shields-io-badge/issues">Issues / Suggestions</a>
                     <a href="https://github.com/vigoren/foundryvtt-shields-io-badge/blob/main/CHANGELOG.md">Change Log</a>
-                    <span>Version: 1.1.0</span>
+                    <span>Version: 1.1.2</span>
                 </div>
                 <div class="col-12 col-md-4 d-flex flex-column align-items-center">
                     <span>Foundry Shields is not affiliated with FoundryVTT in any way.</span>
@@ -335,10 +364,12 @@
                 const parent = elm.closest('.col-12');
                 if(parent){
                     const results = parent.querySelector('.custom-results');
-                    const manifestUrl = document.getElementById('gsLink').value, nameType = document.getElementById('gameSystemDisplay').value;
+                    const manifestUrl = document.getElementById('gsLink').value,
+                        nameType = document.getElementById('gameSystemDisplay').value,
+                        systemVersion = document.getElementById('systemVersion').checked? '&showVersion=1' : '';
                     if(manifestUrl && nameType){
                         results.classList.remove('d-none');
-                        const url = `https://img.shields.io/endpoint?url=${encodeURIComponent(`https://foundryshields.com/system?nameType=${nameType}&url=${manifestUrl}`)}`;
+                        const url = `https://img.shields.io/endpoint?url=${encodeURIComponent(`https://foundryshields.com/system?nameType=${nameType}${systemVersion}&url=${manifestUrl}`)}`;
                         const text = results.querySelector('div');
                         if(text){
                             text.innerText = url;
