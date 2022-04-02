@@ -1,4 +1,4 @@
-![Status](https://img.shields.io/website?down_color=red&down_message=offline&up_color=green&up_message=online&url=https%3A%2F%2Ffoundryshields.com%2F)
+[![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/d8wv.svg)](https://betteruptime.com/?utm_source=status_badge)
 ![License](https://img.shields.io/github/license/vigoren/foundryvtt-shields-io-badge)
 ![Version](https://img.shields.io/github/package-json/v/vigoren/foundryvtt-shields-io-badge)
 
