@@ -54,6 +54,21 @@ export default class Route{
         return moduleUrl;
     }
 
+    parseBadgeStyle(req: express.Request){
+        let badgeStyle = 'flat';
+        if(req.query && req.query.hasOwnProperty('style')){
+            const queryStyle = req.query['style'];
+            if(queryStyle){
+                if(Array.isArray(queryStyle)){
+                    badgeStyle = queryStyle.join('');
+                } else {
+                    badgeStyle = queryStyle.toString();
+                }
+            }
+        }
+        return badgeStyle;
+    }
+
     /**
      * Returns the contents of the module json from the URL
      * @param moduleUrl

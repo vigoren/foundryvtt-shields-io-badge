@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.3 - Badge Styles
+
+- Added an option to the system and version badges to choose the style you want to badge to display as. These styles are taken from shields.io's style list.
+
 ## 1.1.2 - Game System Versions
 
 - Added a new options when generating Game System badges to show the version of the system that the module/world requires. 

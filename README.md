@@ -1,4 +1,4 @@
-[![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/d8wv.svg)](https://betteruptime.com/?utm_source=status_badge)
+[![Better Uptime Badge](https://betteruptime.com/status-badges/v1/monitor/d8wv.svg)](https://status.vig.vg)
 ![License](https://img.shields.io/github/license/vigoren/foundryvtt-shields-io-badge)
 ![Version](https://img.shields.io/github/package-json/v/vigoren/foundryvtt-shields-io-badge)
 
