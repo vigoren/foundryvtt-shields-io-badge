@@ -121,7 +121,8 @@ export default class SystemBadge extends Route{
             message: '',
             color: FoundryOrange,
             labelColor: FoundryGrey,
-            logoSvg: FoundrySVG
+            logoSvg: FoundrySVG,
+            style: this.parseBadgeStyle(req)
         };
         let moduleUrl = this.parseModuleUrl(req);
         if(moduleUrl){

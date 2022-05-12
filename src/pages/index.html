@@ -143,6 +143,21 @@
                                                     This will be a link to the system.json in your repository (GitHub, Gitlab, Bitbucket, etc) from either the main branch or a specific release.<br/>Be sure to link from the raw view of the file to ensure it can be processed properly!
                                                 </div>
                                             </div>
+                                            <div class="options">
+                                                <div class="options-label">Options</div>
+                                                <div class="options-content">
+                                                    <div class="form-floating mb-3">
+                                                        <select class="form-select badge-style" aria-label="Badge Style">
+                                                            <option selected value="flat">Flat</option>
+                                                            <option value="flat-square">Flat Square</option>
+                                                            <option value="plastic">Plastic</option>
+                                                            <option value="for-the-badge">For The Badge</option>
+                                                            <option value="social">Social</option>
+                                                        </select>
+                                                        <label for="gameSystemDisplay">Badge Style</label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="custom-results d-none">
                                                 <p>Here is a preview of and link to your Supported Version Badge!</p>
                                                 <div class="user-select-all border my-2 p-2 bg-grey text-break"></div>
@@ -179,6 +194,21 @@
                                                     This will be a link to the module.json in your repository (GitHub, Gitlab, Bitbucket, etc) from either the main branch or a specific release.<br/>Be sure to link from the raw view of the file to ensure it can be processed properly!
                                                 </div>
                                             </div>
+                                            <div class="options">
+                                                <div class="options-label">Options</div>
+                                                <div class="options-content">
+                                                    <div class="form-floating mb-3">
+                                                        <select class="form-select badge-style" aria-label="Badge Style">
+                                                            <option selected value="flat">Flat</option>
+                                                            <option value="flat-square">Flat Square</option>
+                                                            <option value="plastic">Plastic</option>
+                                                            <option value="for-the-badge">For The Badge</option>
+                                                            <option value="social">Social</option>
+                                                        </select>
+                                                        <label for="gameSystemDisplay">Badge Style</label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="custom-results d-none">
                                                 <p>Here is a preview of and link to your Supported Version Badge!</p>
                                                 <div class="user-select-all border my-2 p-2 bg-grey text-break"></div>
@@ -209,6 +239,21 @@
                                                 <i class="bi bi-info-circle-fill me-2 fs-3"></i>
                                                 <div>
                                                     This will be a link to the world.json in your repository (GitHub, Gitlab, Bitbucket, etc) from either the main branch or a specific release.<br/>Be sure to link from the raw view of the file to ensure it can be processed properly!
+                                                </div>
+                                            </div>
+                                            <div class="options">
+                                                <div class="options-label">Options</div>
+                                                <div class="options-content">
+                                                    <div class="form-floating mb-3">
+                                                        <select class="form-select badge-style" aria-label="Badge Style">
+                                                            <option selected value="flat">Flat</option>
+                                                            <option value="flat-square">Flat Square</option>
+                                                            <option value="plastic">Plastic</option>
+                                                            <option value="for-the-badge">For The Badge</option>
+                                                            <option value="social">Social</option>
+                                                        </select>
+                                                        <label for="gameSystemDisplay">Badge Style</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="custom-results d-none">
@@ -269,6 +314,16 @@
                                         <div class="options-label">Options</div>
                                         <div class="options-content">
                                             <div class="form-floating mb-3">
+                                                <select class="form-select" id="gameSystemBadgeStyle" aria-label="Badge Style">
+                                                    <option selected value="flat">Flat</option>
+                                                    <option value="flat-square">Flat Square</option>
+                                                    <option value="plastic">Plastic</option>
+                                                    <option value="for-the-badge">For The Badge</option>
+                                                    <option value="social">Social</option>
+                                                </select>
+                                                <label for="gameSystemDisplay">Badge Style</label>
+                                            </div>
+                                            <div class="form-floating mb-3">
                                                 <select class="form-select" id="gameSystemDisplay" aria-label="Game System Name Display">
                                                     <option selected value="full">Full</option>
                                                     <option value="foundry">Foundry</option>
@@ -302,7 +357,7 @@
                 <div class="col-12 col-md-4 d-flex flex-column align-items-start">
                     <a href="https://github.com/vigoren/foundryvtt-shields-io-badge/issues">Issues / Suggestions</a>
                     <a href="https://github.com/vigoren/foundryvtt-shields-io-badge/blob/main/CHANGELOG.md">Change Log</a>
-                    <span>Version: 1.1.2</span>
+                    <span>Version: 1.1.3</span>
                 </div>
                 <div class="col-12 col-md-4 d-flex flex-column align-items-center">
                     <span>Foundry Shields is not affiliated with FoundryVTT in any way.</span>
@@ -326,22 +381,28 @@
             elm.addEventListener('onpaste', versionBadgeLinkChange);
             elm.addEventListener('keyup', versionBadgeLinkChange);
         });
+        document.querySelectorAll('.badge-style').forEach(function(elm){
+            elm.addEventListener('change', versionBadgeLinkChange);
+        });
         document.querySelectorAll('.system-badge-link').forEach(function(elm){
             elm.addEventListener('change', systemBadgeChange);
             elm.addEventListener('onpaste', systemBadgeChange);
             elm.addEventListener('keyup', systemBadgeChange);
         });
         document.getElementById('gameSystemDisplay').addEventListener('change', systemBadgeChange);
+        document.getElementById('gameSystemBadgeStyle').addEventListener('change', systemBadgeChange);
 
         function versionBadgeLinkChange(e){
             const elm = e.target;
             if(elm){
                 const parent = elm.closest('.col-12');
                 if(parent){
+                    const manifestUrl = parent.querySelector('.version-badge-link')?.value,
+                        badgeStyle = parent.querySelector('.badge-style')?.value;
                     const results = parent.querySelector('.custom-results');
-                    if(elm.value){
+                    if(manifestUrl){
                         results.classList.remove('d-none');
-                        const url = `https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=${encodeURIComponent(elm.value)}`;
+                        const url = `https://img.shields.io/endpoint?url=${encodeURIComponent(`https://foundryshields.com/version?style=${badgeStyle}&url=${manifestUrl}`)}`;
                         const text = results.querySelector('div');
                         if(text){
                             text.innerText = url;
@@ -365,11 +426,12 @@
                 if(parent){
                     const results = parent.querySelector('.custom-results');
                     const manifestUrl = document.getElementById('gsLink').value,
+                        badgeStyle = document.getElementById('gameSystemBadgeStyle').value,
                         nameType = document.getElementById('gameSystemDisplay').value,
                         systemVersion = document.getElementById('systemVersion').checked? '&showVersion=1' : '';
                     if(manifestUrl && nameType){
                         results.classList.remove('d-none');
-                        const url = `https://img.shields.io/endpoint?url=${encodeURIComponent(`https://foundryshields.com/system?nameType=${nameType}${systemVersion}&url=${manifestUrl}`)}`;
+                        const url = `https://img.shields.io/endpoint?url=${encodeURIComponent(`https://foundryshields.com/system?nameType=${nameType}${systemVersion}&style=${badgeStyle}&url=${manifestUrl}`)}`;
                         const text = results.querySelector('div');
                         if(text){
                             text.innerText = url;
