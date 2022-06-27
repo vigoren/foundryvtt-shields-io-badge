@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.2.0 - Foundry Version 10 Compatibility
+
+- Updated the version badges to be compatible with the new manifest changes outlined [here](https://foundryvtt.com/article/manifest-migration-guide/).
+- Updated the system badges to be compatible with the new manifest changes outlined [here](https://foundryvtt.com/article/manifest-migration-guide/).
+- Small improvements to the website.
+
 ## 1.1.3 - Badge Styles
 
 - Added an option to the system and version badges to choose the style you want to badge to display as. These styles are taken from shields.io's style list.

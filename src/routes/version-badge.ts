@@ -1,6 +1,6 @@
 import Route from "../classes/route.js";
 import {FoundryGrey, FoundryOrange, FoundrySVG, MethodTypes} from "../constants.js";
-import {ShieldIOResponse} from "../interfaces";
+import {ShieldIOResponse, VersionData} from "../interfaces";
 import express from "express";
 import Logger from "../logger.js";
 
@@ -33,28 +33,22 @@ export default class VersionBadge extends Route{
         if(moduleUrl){
             Logger.info(`Loading Data From: ${moduleUrl}`, {badgeData: {type: "VERSION", url: moduleUrl}});
             const moduleJson = await this.getModuleJson(moduleUrl);
-            let min = '', compatible = '';
-            if(moduleJson.hasOwnProperty('minimumCoreVersion')){
-                min = moduleJson.minimumCoreVersion.toString().trim();
+            let parsedVersion: VersionData = {minimum: '', compatible: ''};
+
+            if(moduleJson.hasOwnProperty('compatibility') && moduleJson.compatibility){
+                parsedVersion = this.parseVersionCompatibilityObject(moduleJson.compatibility);
+            } else if(moduleJson.hasOwnProperty('minimumCoreVersion')){
+                parsedVersion.minimum = moduleJson.minimumCoreVersion.toString().trim();
             } else if(moduleJson.hasOwnProperty('coreVersion') && moduleJson.coreVersion){
-                min = moduleJson.coreVersion.toString().trim();
+                parsedVersion.minimum = moduleJson.coreVersion.toString().trim();
             }
-            if(moduleJson.hasOwnProperty('compatibleCoreVersion') && moduleJson.compatibleCoreVersion){
-                compatible = moduleJson.compatibleCoreVersion.toString().trim();
-            }
-
-            if(min !== ''){
-                shieldIo.message = min;
+            if(parsedVersion.compatible === '' && moduleJson.hasOwnProperty('compatibleCoreVersion') && moduleJson.compatibleCoreVersion){
+                parsedVersion.compatible =  moduleJson.compatibleCoreVersion.toString().trim();
             }
 
-            if(compatible !== '' && compatible !== min){
-                const minVal = parseFloat(min);
-                const compatVal = parseFloat(compatible);
-                if(minVal > compatVal && compatVal % 1 === 0 && Math.trunc(minVal) === compatVal){
-                    shieldIo.message = `${min}+`;
-                } else {
-                    shieldIo.message = `${shieldIo.message} - ${compatible}`;
-                }
+            shieldIo.message = this.generateVersionLabel(parsedVersion);
+
+            if(shieldIo.message.includes('-') || shieldIo.message.includes('+')){
                 shieldIo.label = 'Supported Foundry Versions';
             }
         }

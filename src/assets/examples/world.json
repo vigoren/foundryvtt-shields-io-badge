@@ -14,8 +14,25 @@
   "dependencies": [],
   "socket": false,
   "protected": false,
+  "compatibility": {
+    "minimum": "9.238",
+    "verified": "9.238"
+  },
   "coreVersion": "9.238",
   "resetKeys": false,
   "safeMode": false,
-  "systemVersion": "1.5.6"
+  "systemVersion": "1.5.6",
+  "relationships": {
+    "systems": [
+      {
+        "id": "dnd5e",
+        "manifest": "",
+        "compatibility": {
+          "minimum": "1.5.6",
+          "verified": "1.5.6",
+          "maximum": "2"
+        }
+      }
+    ]
+  }
 }

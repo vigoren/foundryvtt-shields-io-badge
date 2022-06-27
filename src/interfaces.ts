@@ -30,12 +30,32 @@ export namespace FoundryVTT {
             url?: string;
         }
 
+        export interface Compatibility {
+            minimum?: string | number;
+            verified?: string | number;
+            maximum?: string | number;
+        }
+
+        export interface Relationship {
+            systems?: RelationshipItem[];
+            requires?: RelationshipItem[];
+        }
+
+        export interface RelationshipItem {
+            id: string;
+            type?: string;
+            manifest?: string;
+            compatibility?: Compatibility;
+        }
+
         export interface Json {
+            id: string;
             name: string;
             title: string;
             description: string;
             version: string;
             author: string;
+            compatibility: FoundryVTT.Manifest.Compatibility;
             minimumCoreVersion: string;
             compatibleCoreVersion?: string;
             scripts?: string[];
@@ -44,6 +64,7 @@ export namespace FoundryVTT {
             packs?: FoundryVTT.Manifest.Pack[];
             dependencies?: FoundryVTT.Manifest.Dependency[];
             languages?: FoundryVTT.Manifest.Language[];
+            relationships?: FoundryVTT.Manifest.Relationship;
             systems?: string[];
             system?: string;
             minimumSystemVersion?: string | number;
@@ -69,6 +90,11 @@ export interface SystemNames {
     full: string;
     foundry: string;
     short: string;
+}
+
+export interface VersionData {
+    minimum: string;
+    compatible: string;
 }
 
 export interface ShieldIOResponse {

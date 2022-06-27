@@ -1,7 +1,7 @@
 {
   "name": "foundryvtt-shields-io-badge",
   "description": "An API endpoint for generating minimum and compatible FoundryVTT version badges.",
-  "version": "1.1.3",
+  "version": "1.2.0",
   "author": "Dean Vigoren (vigorator)",
   "keywords": [
     "foundryvtt",
@@ -18,14 +18,16 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
-    "@types/node": "^17.0.32",
-    "ts-node": "^10.7.0",
-    "typescript": "^4.6.4"
+    "@types/node": "^18.0.0",
+    "copyfiles": "^2.4.1",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.4"
   },
   "dependencies": {
-    "@logtail/node": "^0.1.10",
+    "@logtail/node": "^0.1.12",
     "express": "^4.18.1",
-    "node-fetch": "^3.2.4"
+    "node-fetch": "^3.2.6"
   },
   "bugs": {
     "url": "https://github.com/vigoren/foundryvtt-shields-io-badge/issues"
@@ -33,8 +35,9 @@
   "homepage": "https://github.com/vigoren/foundryvtt-shields-io-badge#readme",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -b",
-    "run": "node ./dist/index.js",
-    "buildRun": "tsc -b & node ./dist/index.js"
+    "clean": "rimraf ./dist",
+    "copy": "copyfiles -u 1 ./src/pages/*.html ./src/assets/**/*.* ./dist/",
+    "build": "npm run clean && tsc -b && npm run copy",
+    "run": "npm run build && node ./dist/index.js"
   }
 }
