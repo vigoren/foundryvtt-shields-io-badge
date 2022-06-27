@@ -41,13 +41,13 @@ export default class Server{
     }
 
     /**
-     * Used to initialize all of the routes
+     * Used to initialize all the routes
      */
     initializeRoutes(){
         this.app.get('/', (req: express.Request, res: express.Response) => {
-            res.sendFile(path.resolve('./src/pages/index.html'));
+            res.sendFile('pages/index.html', {root: path.join(path.dirname(''), 'dist')});
         });
-        this.app.use('/assets', express.static('./src/assets'));
+        this.app.use('/assets', express.static('./dist/assets'));
 
         const vb = new VersionBadge();
         vb.initialize(this);

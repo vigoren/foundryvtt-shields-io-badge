@@ -103,12 +103,19 @@ export default class SystemBadge extends Route{
         return key;
     }
 
-    getSystemMinimumVersion(moduleJson: FoundryVTT.Manifest.Json, req: express.Request){
+    getSystemMinimumVersion(moduleJson: FoundryVTT.Manifest.Json | FoundryVTT.Manifest.RelationshipItem, req: express.Request){
+        console.log(req.query['showVersion']);
         if(req.query && req.query.hasOwnProperty('showVersion') &&  req.query['showVersion']){
-            if(moduleJson.minimumSystemVersion){
-                return ` v${moduleJson.minimumSystemVersion.toString().trim()}+`;
-            } else if(moduleJson.systemVersion){
-                return ` v${moduleJson.systemVersion.toString().trim()}`;
+            if(moduleJson.hasOwnProperty('compatibility') && moduleJson.compatibility){
+                const parsedVersion = this.parseVersionCompatibilityObject(moduleJson.compatibility);
+                return ` ${this.generateVersionLabel(parsedVersion)}`;
+            } else if(moduleJson.hasOwnProperty('minimumSystemVersion') || moduleJson.hasOwnProperty('systemVersion')){
+                const data = (<FoundryVTT.Manifest.Json>moduleJson);
+                if(data.minimumSystemVersion){
+                    return ` ${data.minimumSystemVersion.toString().trim()}+`;
+                } else if(data.systemVersion){
+                    return ` ${data.systemVersion.toString().trim()}`;
+                }
             }
         }
         return '';
@@ -128,7 +135,20 @@ export default class SystemBadge extends Route{
         if(moduleUrl){
             Logger.info(`Loading Data From: ${moduleUrl}`, {badgeData: {type: "SYSTEM", url: moduleUrl}, context: {}});
             const moduleJson = await this.getModuleJson(moduleUrl);
-            if(moduleJson.systems !== undefined){
+            // @ts-ignore
+            delete moduleJson['compatibility']; //We don't need to know the modules own compatibility when checking system data
+            if(moduleJson.hasOwnProperty('relationships') && moduleJson.relationships && moduleJson.relationships.hasOwnProperty('systems') && moduleJson.relationships.systems && moduleJson.relationships.systems.length){
+                for(let i = 0; i < moduleJson.relationships.systems.length; i++){
+                    if(i !== 0){
+                        shieldIo.message += ', ';
+                    }
+                    shieldIo.message += this.getSystemName(moduleJson.relationships.systems[i].id, req);
+                    shieldIo.message += this.getSystemMinimumVersion(moduleJson.relationships.systems[i], req);
+                }
+                if(moduleJson.relationships.systems.length > 1){
+                    shieldIo.label = 'Supported Game Systems';
+                }
+            } else if(moduleJson.systems !== undefined){
                 let message = '';
                 if(Array.isArray(moduleJson.systems)){
                     for(let i = 0; i < moduleJson.systems.length; i++){
@@ -146,8 +166,7 @@ export default class SystemBadge extends Route{
                 shieldIo.message = message + this.getSystemMinimumVersion(moduleJson, req);
             } else if(moduleJson.system !== undefined){
                 shieldIo.message = this.getSystemName(moduleJson.system, req) + this.getSystemMinimumVersion(moduleJson, req);
-            }
-            else {
+            } else {
                 shieldIo.message = 'All';
                 shieldIo.label = 'Supported Game Systems';
             }
