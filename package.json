@@ -1,7 +1,7 @@
 {
   "name": "foundryvtt-shields-io-badge",
   "description": "An API endpoint for generating minimum and compatible FoundryVTT version badges.",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "author": "Dean Vigoren (vigorator)",
   "keywords": [
     "foundryvtt",
@@ -36,7 +36,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf ./dist",
-    "copy": "copyfiles -u 1 ./src/pages/*.html ./src/assets/**/*.* ./dist/",
+    "copy": "copyfiles -u 1 './src/pages/*.html' './src/assets/**/*.*' ./dist/",
     "build": "npm run clean && tsc -b && npm run copy",
     "run": "npm run build && node ./dist/index.js"
   }

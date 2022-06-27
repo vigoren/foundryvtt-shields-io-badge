@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.2.2 - Bug Fixes
+
+- Fixed the Supported Game System examples to use new URLS for the example manifests.
+- Fixed an issue where the logo and icon wouldn't load for the site.
+
 ## 1.2.0 - Foundry Version 10 Compatibility
 
 - Updated the version badges to be compatible with the new manifest changes outlined [here](https://foundryvtt.com/article/manifest-migration-guide/).
