@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.2.3 - Dependency Update
+
+- Updated the dependencies used by foundry shields.
+
 ## 1.2.2 - Bug Fixes
 
 - Fixed the Supported Game System examples to use new URLS for the example manifests.

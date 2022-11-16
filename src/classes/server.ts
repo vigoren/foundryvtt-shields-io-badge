@@ -2,7 +2,7 @@ import express from "express";
 import VersionBadge from "../routes/version-badge.js";
 import path from "path";
 import SystemBadge from "../routes/system-badge.js";
-import {RequestHandler} from "express/ts4.0";
+import {RequestHandler} from "express";
 import Logger from "../logger.js";
 
 /**
