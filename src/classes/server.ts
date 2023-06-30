@@ -47,6 +47,9 @@ export default class Server{
         this.app.get('/', (req: express.Request, res: express.Response) => {
             res.sendFile('pages/index.html', {root: path.join(path.dirname(''), 'dist')});
         });
+        this.app.get('/sitemap.xml', (req: express.Request, res: express.Response) => {
+            res.sendFile('pages/sitemap.xml', {root: path.join(path.dirname(''), 'dist')});
+        });
         this.app.use('/assets', express.static('./dist/assets'));
 
         const vb = new VersionBadge();
