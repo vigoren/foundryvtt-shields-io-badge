@@ -1,6 +1,7 @@
 {
   "functions": {
     "api/*.js": {
+        "maxDuration": 10
     }
   },
   "rewrites": [
