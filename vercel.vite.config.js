@@ -8,13 +8,14 @@ export default defineConfig({
     base: "./",
     appType: "custom",
     build: {
-        //outDir: "../dist",
+        //outDir: "../dist/api",
         emptyOutDir: true,
         minify: false,
         reportCompressedSize: true,
         ssr: resolve(__dirname, "src/vercel.ts"),
         rollupOptions: {
             output: {
+                dir: "./dist/api",
                 inlineDynamicImports: true
             },
             preserveSymlinks: true,

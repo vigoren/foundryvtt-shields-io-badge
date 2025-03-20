@@ -38,7 +38,7 @@
   "main": "index.js",
   "scripts": {
     "build:local": "tsc && vite build",
-    "build:vercel": "tsc && vite build --config vercel.vite.config.js",
+    "build:vercel": "vite build --config vercel.vite.config.js",
     "preview": "node dist/index.js"
   }
 }
