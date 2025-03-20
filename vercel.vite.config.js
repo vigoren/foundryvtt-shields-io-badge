@@ -35,6 +35,10 @@ export default defineConfig({
                 {
                     src: './src/pages/**/*',
                     dest: 'pages'
+                },
+                {
+                    src: './vercel.json',
+                    dest: '.'
                 }
             ]
         })
