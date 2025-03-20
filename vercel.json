@@ -1,4 +1,8 @@
 {
+  "functions": {
+    "api/*.js": {
+    }
+  },
   "rewrites": [
     {
       "source": "/(.*)",
