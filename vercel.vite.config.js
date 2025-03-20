@@ -10,7 +10,7 @@ export default defineConfig({
     build: {
         //outDir: "../dist",
         emptyOutDir: true,
-        minify: true,
+        minify: false,
         reportCompressedSize: true,
         ssr: resolve(__dirname, "src/vercel.ts"),
         rollupOptions: {
