@@ -3,8 +3,8 @@ import Server from "./server.js";
 import {MethodTypes} from "../constants.js";
 import {URL} from "url";
 import fetch from "node-fetch";
-import express from "express";
 import Logger from "../logger.js";
+import {FastifyInstance, FastifyRequest} from "fastify";
 
 /**
  * Base Route class
@@ -20,17 +20,17 @@ export default class Route{
 
     /**
      * Go through every method and initialize it
-     * @param {Server} server The express server to initialize the routes for
+     * @param {Server} fastify The express server to initialize the routes for
      */
-    initialize(server: Server){
+    initialize(fastify: FastifyInstance){
         for(let i = 0; i < this.methods.length; i++) {
             const method = this.methods[i];
             switch (method.type) {
                 case MethodTypes.GET:
-                    server.app.get(`/${method.key}/${method.parameters? method.parameters : ':query?'}`, method.callback);
+                    fastify.get(`/${method.key}/${method.parameters? method.parameters : ':query?'}`, method.callback);
                     break;
                 case MethodTypes.POST:
-                    server.app.post(`/${method.key}`, method.callback);
+                    fastify.post(`/${method.key}`, method.callback);
                     break;
                 default:
                     break;
@@ -39,9 +39,9 @@ export default class Route{
         }
     }
 
-    parseModuleUrl(req: express.Request){
+    parseModuleUrl(req: FastifyRequest<{ Querystring: { url: string; } }>){
         let moduleUrl = '';
-        if(req.query && req.query.hasOwnProperty('url')){
+        if(req.query && Object.hasOwn(req.query, 'url')){
             const queryUrl = req.query['url'];
             if(queryUrl){
                 if(Array.isArray(queryUrl)){
@@ -54,9 +54,9 @@ export default class Route{
         return moduleUrl;
     }
 
-    parseBadgeStyle(req: express.Request){
+    parseBadgeStyle(req: FastifyRequest<{ Querystring: { style: string; } }>){
         let badgeStyle = 'flat';
-        if(req.query && req.query.hasOwnProperty('style')){
+        if(req.query && Object.hasOwn(req.query, 'style')){
             const queryStyle = req.query['style'];
             if(queryStyle){
                 if(Array.isArray(queryStyle)){

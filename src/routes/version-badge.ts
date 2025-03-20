@@ -1,8 +1,8 @@
 import Route from "../classes/route.js";
 import {FoundryGrey, FoundryOrange, FoundrySVG, MethodTypes} from "../constants.js";
 import {ShieldIOResponse, VersionData} from "../interfaces";
-import express from "express";
 import Logger from "../logger.js";
+import {FastifyReply, FastifyRequest} from "fastify";
 
 
 export default class VersionBadge extends Route{
@@ -18,7 +18,7 @@ export default class VersionBadge extends Route{
         });
     }
 
-    async version(req: express.Request, res: express.Response){
+    async version(req: FastifyRequest<{ Querystring: { url: string; style: string; showVersion: string; nameType: string } }>, res: FastifyReply){
         const shieldIo: ShieldIOResponse = {
             schemaVersion: 1,
             label: 'Supported Foundry Version',
@@ -56,7 +56,8 @@ export default class VersionBadge extends Route{
         if(shieldIo.message === '') {
             shieldIo.message = 'Error getting information.';
         }
-        res.set('Cache-Control', 'public, max-age:300');
-        res.status(200).json(shieldIo);
+
+        res.header('Cache-Control', 'public, max-age:300');
+        res.status(200).send(shieldIo);
     }
 }

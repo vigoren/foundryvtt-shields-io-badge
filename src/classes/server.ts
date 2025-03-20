@@ -1,61 +1,73 @@
-import express from "express";
+import Fastify from "fastify";
+import type { FastifyInstance } from "fastify";
+import {fastifyStatic} from "@fastify/static";
 import VersionBadge from "../routes/version-badge.js";
 import path from "path";
 import SystemBadge from "../routes/system-badge.js";
-import {RequestHandler} from "express";
 import Logger from "../logger.js";
+
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 /**
  * The server class for this service
  */
 export default class Server{
-
-    /**
-     * The express instance
-     * @type{express.Express}
-     */
-    app: express.Express;
+    app: FastifyInstance | null = null;
 
     /**
      * The port number to serve to listen on
-     * @type{number | string}
+     * @type{number}
      */
-    port: number | string;
+    port: number;
 
     /**
      * The server constructor
-     * @param {number|string} port The port to listen for events on
+     * @param {string} port The port to listen for events on
      */
-    constructor(port: number | string) {
-        this.port = port;
-        this.app = express();
-        this.app.use(<RequestHandler>express.json());
+    constructor(port: string) {
+        this.port = parseInt(port as string);
     }
 
     /**
      * Starts the server
      */
-    start(){
-        this.app.listen(this.port, () => {Logger.info('Server Started!', {})});
-        this.initializeRoutes();
+    async start(){
+        try {
+            this.app = Fastify({
+                logger: true
+            });
+            this.app.register(fastifyStatic, {
+                root: __dirname,
+            });
+            this.initializeRoutes(this.app);
+            await this.app.listen({ port: this.port });
+        } catch (err) {
+            this.app?.log.error(err);
+        }
+    }
+
+    async routes(fastify: FastifyInstance, options: any){
+        this.initializeRoutes(fastify);
     }
 
     /**
      * Used to initialize all the routes
      */
-    initializeRoutes(){
-        this.app.get('/', (req: express.Request, res: express.Response) => {
-            res.sendFile('pages/index.html', {root: path.join(path.dirname(''), 'dist')});
+    initializeRoutes(fastify: FastifyInstance){
+        fastify.get('/', (reqt, res) => {
+            res.sendFile('/pages/index.html');
         });
-        this.app.get('/sitemap.xml', (req: express.Request, res: express.Response) => {
-            res.sendFile('pages/sitemap.xml', {root: path.join(path.dirname(''), 'dist')});
+        fastify.get('/sitemap.xml', (req, res) => {
+            res.sendFile('/pages/sitemap.xml');
         });
-        this.app.use('/assets', express.static('./dist/assets'));
-
         const vb = new VersionBadge();
-        vb.initialize(this);
+        vb.initialize(fastify);
 
         const sb = new SystemBadge();
-        sb.initialize(this);
+        sb.initialize(fastify);
     }
 }

@@ -1,8 +1,8 @@
 import Route from "../classes/route.js";
 import {FoundryGrey, FoundryOrange, FoundrySVG, MethodTypes} from "../constants.js";
-import express from "express";
 import {FoundryVTT, ShieldIOResponse, SystemNames} from "../interfaces";
 import Logger from "../logger.js";
+import {FastifyReply, FastifyRequest} from "fastify";
 
 export default class SystemBadge extends Route{
 
@@ -93,8 +93,8 @@ export default class SystemBadge extends Route{
         });
     }
 
-    getSystemName(key: string, req: express.Request){
-        if(req.query && req.query.hasOwnProperty('nameType') &&  req.query['nameType']){
+    getSystemName(key: string, req:  FastifyRequest<{ Querystring: { nameType: string; } }>){
+        if(req.query && Object.hasOwn(req.query, 'nameType') &&  req.query['nameType']){
             let type = (Array.isArray(req.query['nameType'])? req.query['nameType'].join('') : req.query['nameType'].toString()).toLowerCase() as 'short' | 'full' | 'foundry';
             if(this.systemPrettyNames[key] && (<SystemNames>this.systemPrettyNames[key])[type]){
                 return (<SystemNames>this.systemPrettyNames[key])[type];
@@ -103,9 +103,9 @@ export default class SystemBadge extends Route{
         return key;
     }
 
-    getSystemMinimumVersion(moduleJson: FoundryVTT.Manifest.Json | FoundryVTT.Manifest.RelationshipItem, req: express.Request){
+    getSystemMinimumVersion(moduleJson: FoundryVTT.Manifest.Json | FoundryVTT.Manifest.RelationshipItem, req:  FastifyRequest<{ Querystring: { showVersion: string; } }>){
         console.log(req.query['showVersion']);
-        if(req.query && req.query.hasOwnProperty('showVersion') &&  req.query['showVersion']){
+        if(req.query && Object.hasOwn(req.query, 'showVersion') &&  req.query['showVersion']){
             if(moduleJson.hasOwnProperty('compatibility') && moduleJson.compatibility){
                 const parsedVersion = this.parseVersionCompatibilityObject(moduleJson.compatibility);
                 return ` ${this.generateVersionLabel(parsedVersion)}`;
@@ -121,7 +121,7 @@ export default class SystemBadge extends Route{
         return '';
     }
 
-    async system(req: express.Request, res: express.Response){
+    async system(req: FastifyRequest<{ Querystring: { url: string; style: string; showVersion: string; nameType: string } }>, res: FastifyReply){
         const shieldIo: ShieldIOResponse = {
             schemaVersion: 1,
             label: 'Supported Game System',
@@ -174,7 +174,7 @@ export default class SystemBadge extends Route{
         if(shieldIo.message === '') {
             shieldIo.message = 'Error getting information.';
         }
-        res.set('Cache-Control', 'public, max-age:300');
-        res.status(200).json(shieldIo);
+        res.header('Cache-Control', 'public, max-age:300');
+        res.status(200).send(shieldIo);
     }
 }

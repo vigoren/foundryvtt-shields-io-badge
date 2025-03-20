@@ -1,5 +1,5 @@
 import {MethodTypes} from "./constants";
-import express from "express";
+import {FastifyReply, FastifyRequest} from "fastify";
 
 export namespace FoundryVTT {
 
@@ -132,5 +132,5 @@ export interface Method {
     /**
      * The call back function when the route is triggered.
      */
-    callback: express.RequestHandler;
+    callback: (request: FastifyRequest<{ Querystring: { url: string; style: string; showVersion: string; nameType: string } }>, reply: FastifyReply) => void;
 }
