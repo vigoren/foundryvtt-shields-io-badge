@@ -28,6 +28,9 @@
     "fastify": "^5.2.1",
     "node-fetch": "^3.3.1"
   },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.9.5"
+  },
   "bugs": {
     "url": "https://github.com/vigoren/foundryvtt-shields-io-badge/issues"
   },
