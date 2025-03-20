@@ -12,7 +12,7 @@ export default defineConfig({
         emptyOutDir: true,
         minify: false,
         reportCompressedSize: true,
-        ssr: resolve(__dirname, "src/vercel.ts"),
+        ssr: resolve(__dirname, "src/api/index.ts"),
         rollupOptions: {
             output: {
                 dir: "./dist/api",
