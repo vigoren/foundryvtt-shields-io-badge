@@ -8,13 +8,17 @@ export default defineConfig({
     base: "./",
     appType: "custom",
     build: {
-        //outDir: "../dist",
+        outDir: "./dist",
         emptyOutDir: true,
         minify: true,
         reportCompressedSize: true,
-        ssr: resolve(__dirname, "src/version.ts"),
+        ssr: resolve(__dirname, "src/[route].ts"),
         rollupOptions: {
             output: {
+                chunkFileNames: "[route].ts",
+                sanitizeFileName: (fileName) => {
+                    return fileName;
+                },
                 dir: "./functions",
                 inlineDynamicImports: true
             },

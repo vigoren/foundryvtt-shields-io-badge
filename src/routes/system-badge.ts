@@ -1,6 +1,5 @@
 import {FoundryGrey, FoundryOrange, FoundrySVG} from "../constants.js";
 import {FoundryVTT, ShieldIOResponse, SystemNames} from "../interfaces";
-import Logger from "../logger.js";
 import {parseModuleUrl, parseBadgeStyle, parseVersionCompatibilityObject, generateVersionLabel, getModuleJson} from "../utilities.js";
 
 
@@ -123,7 +122,7 @@ export async function system(req: Request){
     };
     let moduleUrl = parseModuleUrl(req);
     if(moduleUrl){
-        Logger.info(`Loading Data From: ${moduleUrl}`, {badgeData: {type: "SYSTEM", url: moduleUrl}, context: {}});
+        console.info(`Loading Data From: ${moduleUrl}`, {badgeData: {type: "SYSTEM", url: moduleUrl}, context: {}});
         const moduleJson = await getModuleJson(moduleUrl);
         // @ts-ignore
         delete moduleJson['compatibility']; //We don't need to know the modules own compatibility when checking system data
