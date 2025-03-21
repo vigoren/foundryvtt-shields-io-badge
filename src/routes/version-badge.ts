@@ -15,6 +15,7 @@ export async function version(req: Request){
         style: parseBadgeStyle(req)
     };
     let moduleUrl = parseModuleUrl(req);
+    console.log(moduleUrl);
 
     if(moduleUrl){
         console.info(`Loading Data From: ${moduleUrl}`, {badgeData: {type: "VERSION", url: moduleUrl}});
