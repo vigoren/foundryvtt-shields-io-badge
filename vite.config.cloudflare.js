@@ -12,7 +12,7 @@ export default defineConfig({
         emptyOutDir: true,
         minify: true,
         reportCompressedSize: true,
-        ssr: resolve(__dirname, "src/index.ts"),
+        ssr: resolve(__dirname, "src/version.ts"),
         rollupOptions: {
             output: {
                 dir: "./functions",
