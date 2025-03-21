@@ -1,4 +1,4 @@
-import type { PagesFunction } from "@cloudflare/workers-types";
+import type { PagesFunction, Request } from "@cloudflare/workers-types";
 import { version } from "./routes/version-badge";
 
 type Env = {

@@ -1,10 +1,12 @@
+import type { Request } from "@cloudflare/workers-types";
 import {FoundryVTT, VersionData} from "./interfaces";
 
 
 export function parseModuleUrl(req: Request) {
     let moduleUrl = '';
-    if (req.query && Object.hasOwn(req.query, 'url')) {
-        const queryUrl = req.query['url'];
+    const url = new URL(req.url);
+    if (url.searchParams.has("url")) {
+        const queryUrl = url.searchParams.get('url');
         if (queryUrl) {
             if (Array.isArray(queryUrl)) {
                 moduleUrl = queryUrl.join('');
@@ -18,8 +20,9 @@ export function parseModuleUrl(req: Request) {
 
 export function parseBadgeStyle(req: Request){
     let badgeStyle = 'flat';
-    if(req.query && Object.hasOwn(req.query, 'style')){
-        const queryStyle = req.query['style'];
+    const url = new URL(req.url);
+    if(url.searchParams.has("style")){
+        const queryStyle = url.searchParams.get('style');
         if(queryStyle){
             if(Array.isArray(queryStyle)){
                 badgeStyle = queryStyle.join('');

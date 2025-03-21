@@ -1,5 +1,6 @@
 import {FoundryGrey, FoundryOrange, FoundrySVG} from "../constants.js";
 import {ShieldIOResponse, VersionData} from "../interfaces";
+import type { Request } from "@cloudflare/workers-types";
 
 import {parseModuleUrl, parseBadgeStyle, parseVersionCompatibilityObject, generateVersionLabel, getModuleJson} from "../utilities.js";
 
