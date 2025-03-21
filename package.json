@@ -37,8 +37,8 @@
   "homepage": "https://github.com/vigoren/foundryvtt-shields-io-badge#readme",
   "main": "index.js",
   "scripts": {
-    "build:local": "tsc && vite build",
-    "build:vercel": "vite build --config vercel.vite.config.js",
+    "build:local": "vite build",
+    "build:cloudflare": "vite build --config vite.config.cloudflare.js",
     "preview": "node dist/index.js"
   }
 }

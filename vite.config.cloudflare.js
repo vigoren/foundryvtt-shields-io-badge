@@ -8,14 +8,14 @@ export default defineConfig({
     base: "./",
     appType: "custom",
     build: {
-        //outDir: "../dist/api",
+        //outDir: "../dist",
         emptyOutDir: true,
-        minify: false,
+        minify: true,
         reportCompressedSize: true,
-        ssr: resolve(__dirname, "api/index.ts"),
+        ssr: resolve(__dirname, "src/index.ts"),
         rollupOptions: {
             output: {
-                dir: "./dist/api",
+                dir: "./functions",
                 inlineDynamicImports: true
             },
             preserveSymlinks: true,
@@ -35,10 +35,6 @@ export default defineConfig({
                 },
                 {
                     src: './src/pages/**/*',
-                    dest: 'pages'
-                },
-                {
-                    src: './vercel.json',
                     dest: '.'
                 }
             ]
