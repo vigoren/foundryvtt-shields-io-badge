@@ -1,7 +1,5 @@
 import {FoundryVTT, VersionData} from "./interfaces";
 import {URL} from "url";
-import fetch from "node-fetch";
-import Logger from "./logger";
 
 
 export function parseModuleUrl(req: Request) {
@@ -71,7 +69,7 @@ export async function getModuleJson(moduleUrl: string): Promise<FoundryVTT.Manif
         const fResponse = await fetch(url.toString());
         return <Promise<FoundryVTT.Manifest.Json>> await fResponse.json();
     } catch (e){
-        Logger.error((<Error>e).message, {badgeData: {url: moduleUrl}});
+        console.error((<Error>e).message, {badgeData: {url: moduleUrl}});
         return {
             id: '',
             name: '',

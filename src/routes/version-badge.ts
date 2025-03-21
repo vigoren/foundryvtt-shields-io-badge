@@ -1,6 +1,5 @@
 import {FoundryGrey, FoundryOrange, FoundrySVG} from "../constants.js";
 import {ShieldIOResponse, VersionData} from "../interfaces";
-import Logger from "../logger.js";
 
 import {parseModuleUrl, parseBadgeStyle, parseVersionCompatibilityObject, generateVersionLabel, getModuleJson} from "../utilities.js";
 
@@ -18,7 +17,7 @@ export async function version(req: Request){
     let moduleUrl = parseModuleUrl(req);
 
     if(moduleUrl){
-        Logger.info(`Loading Data From: ${moduleUrl}`, {badgeData: {type: "VERSION", url: moduleUrl}});
+        console.info(`Loading Data From: ${moduleUrl}`, {badgeData: {type: "VERSION", url: moduleUrl}});
         const moduleJson = await getModuleJson(moduleUrl);
         let parsedVersion: VersionData = {minimum: '', compatible: ''};
 
