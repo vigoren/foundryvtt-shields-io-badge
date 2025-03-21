@@ -1,5 +1,4 @@
 import {FoundryVTT, VersionData} from "./interfaces";
-import {URL} from "url";
 
 
 export function parseModuleUrl(req: Request) {
@@ -65,8 +64,7 @@ export function generateVersionLabel(vData: VersionData){
 
 export async function getModuleJson(moduleUrl: string): Promise<FoundryVTT.Manifest.Json>{
     try{
-        const url = new URL(moduleUrl);
-        const fResponse = await fetch(url.toString());
+        const fResponse = await fetch(moduleUrl);
         return <Promise<FoundryVTT.Manifest.Json>> await fResponse.json();
     } catch (e){
         console.error((<Error>e).message, {badgeData: {url: moduleUrl}});
