@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import { resolve } from "path";
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 import { builtinModules } from "node:module";
-const external = [...builtinModules, ...builtinModules.map((m) => `node:${m}`)];
+const external = [...builtinModules, ...builtinModules.map((m) => `node:${m}`), '@cloudflare/workers-types'];
 
 export default defineConfig({
     base: "./",

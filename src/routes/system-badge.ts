@@ -1,6 +1,8 @@
 import {FoundryGrey, FoundryOrange, FoundrySVG} from "../constants.js";
 import {FoundryVTT, ShieldIOResponse, SystemNames} from "../interfaces";
 import {parseModuleUrl, parseBadgeStyle, parseVersionCompatibilityObject, generateVersionLabel, getModuleJson} from "../utilities.js";
+import { Request, Response, URL } from "@cloudflare/workers-types";
+import {Logging} from "../logger";
 
 
 const systemPrettyNames: Record<string, SystemNames> = {
@@ -110,7 +112,7 @@ function getSystemMinimumVersion(moduleJson: FoundryVTT.Manifest.Json | FoundryV
 }
 
 
-export async function system(req: Request){
+export async function system(req: Request, logger: Logging){
     const shieldIo: ShieldIOResponse = {
         schemaVersion: 1,
         label: 'Supported Game System',
@@ -122,7 +124,7 @@ export async function system(req: Request){
     };
     let moduleUrl = parseModuleUrl(req);
     if(moduleUrl){
-        console.info(`Loading Data From: ${moduleUrl}`, {badgeData: {type: "SYSTEM", url: moduleUrl}, context: {}});
+        logger.info(`Loading Data From: ${moduleUrl}`, {badgeData: {type: "SYSTEM", url: moduleUrl}, context: {}});
         const moduleJson = await getModuleJson(moduleUrl);
         // @ts-ignore
         delete moduleJson['compatibility']; //We don't need to know the modules own compatibility when checking system data

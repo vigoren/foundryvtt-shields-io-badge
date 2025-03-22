@@ -1,10 +1,11 @@
 import {FoundryGrey, FoundryOrange, FoundrySVG} from "../constants.js";
 import {ShieldIOResponse, VersionData} from "../interfaces";
-
 import {parseModuleUrl, parseBadgeStyle, parseVersionCompatibilityObject, generateVersionLabel, getModuleJson} from "../utilities.js";
+import { Request, Response } from "@cloudflare/workers-types";
+import {Logging} from "../logger";
 
 
-export async function version(req: Request){
+export async function version(req: Request, logger: Logging){
     const shieldIo: ShieldIOResponse = {
         schemaVersion: 1,
         label: 'Supported Foundry Version',
@@ -16,7 +17,7 @@ export async function version(req: Request){
     };
     let moduleUrl = parseModuleUrl(req);
     if(moduleUrl){
-        console.info(`Loading Data From: ${moduleUrl}`, {badgeData: {type: "VERSION", url: moduleUrl}});
+        logger.info(`Loading Data From: ${moduleUrl}`, {badgeData: {type: "VERSION", url: moduleUrl}});
         const moduleJson = await getModuleJson(moduleUrl);
         let parsedVersion: VersionData = {minimum: '', compatible: ''};
 

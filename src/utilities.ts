@@ -1,3 +1,4 @@
+import {console, fetch, Request, URL } from "@cloudflare/workers-types";
 import {FoundryVTT, VersionData} from "./interfaces";
 
 
@@ -67,7 +68,7 @@ export function generateVersionLabel(vData: VersionData){
 export async function getModuleJson(moduleUrl: string): Promise<FoundryVTT.Manifest.Json>{
     try{
         const fResponse = await fetch(moduleUrl);
-        return <Promise<FoundryVTT.Manifest.Json>> await fResponse.json();
+        return <Promise<FoundryVTT.Manifest.Json>><unknown>await fResponse.json();
     } catch (e){
         console.error((<Error>e).message, {badgeData: {url: moduleUrl}});
         return {

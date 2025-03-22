@@ -1,13 +1,16 @@
-import { Logtail } from "@logtail/node";
+import { console } from "@cloudflare/workers-types";
+import { Logtail } from "@logtail/edge";
 
-class Logging{
+export class Logging{
 
     private logtail: Logtail | null = null;
 
-    constructor() {
-        const token = process.env.LOGTAIL || '';
+    constructor(LOGTAIL: (string | null) = null){
+        const token = LOGTAIL || '';
         if(token){
-            this.logtail = new Logtail(token);
+            this.logtail = new Logtail(token, {
+                endpoint: 'https://in.logs.betterstack.com',
+            });
         }
     }
 
@@ -39,5 +42,3 @@ class Logging{
         }
     }
 }
-const Logger: Logging = new Logging();
-export default Logger;
