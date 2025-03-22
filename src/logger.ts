@@ -1,4 +1,3 @@
-import { console } from "@cloudflare/workers-types";
 import { Logtail } from "@logtail/edge";
 
 export class Logging{

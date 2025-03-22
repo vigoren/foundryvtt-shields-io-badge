@@ -1,5 +1,4 @@
 import {MethodTypes} from "./constants";
-import {FastifyReply, FastifyRequest} from "fastify";
 
 export namespace FoundryVTT {
 
@@ -111,26 +110,4 @@ export interface ShieldIOResponse {
     logoPosition?: string;
     style?: string;
     cacheSeconds?: number;
-}
-
-/**
- * A routh method
- */
-export interface Method {
-    /**
-     * The method type
-     */
-    type: MethodTypes;
-    /**
-     * The method key, this makes up the root of the URL /api/{key}
-     */
-    key: string;
-    /**
-     * Any URL parameters to append onto the end of the root
-     */
-    parameters: string;
-    /**
-     * The call back function when the route is triggered.
-     */
-    callback: (request: FastifyRequest<{ Querystring: { url: string; style: string; showVersion: string; nameType: string } }>, reply: FastifyReply) => void;
 }

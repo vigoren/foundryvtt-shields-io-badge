@@ -1,4 +1,3 @@
-import {console, fetch, Request, URL } from "@cloudflare/workers-types";
 import {FoundryVTT, VersionData} from "./interfaces";
 
 

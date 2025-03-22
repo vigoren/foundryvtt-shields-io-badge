@@ -1,4 +1,3 @@
-import  { type PagesFunction, Response } from "@cloudflare/workers-types";
 import { version } from "./routes/version-badge";
 import {system} from "./routes/system-badge";
 import {Logging} from "./logger";
