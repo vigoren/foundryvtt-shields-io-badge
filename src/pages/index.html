@@ -523,6 +523,8 @@
         document.getElementById('gameSystemDisplay').addEventListener('change', systemBadgeChange);
         document.getElementById('gameSystemBadgeStyle').addEventListener('change', systemBadgeChange);
 
+        const domain = `${window.location.protocol}//${window.location.host}`;
+
         function versionBadgeLinkChange(e){
             const elm = e.target;
             if(elm){
@@ -533,7 +535,7 @@
                     const results = parent.querySelector('.custom-results');
                     if(manifestUrl){
                         results.classList.remove('d-none');
-                        const url = `https://img.shields.io/endpoint?url=${encodeURIComponent(`https://foundryshields.com/version?style=${badgeStyle}&url=${manifestUrl}`)}`;
+                        const url = `https://img.shields.io/endpoint?url=${encodeURIComponent(`${domain}/version?style=${badgeStyle}&url=${manifestUrl}`)}`;
                         const text = results.querySelector('div');
                         if(text){
                             text.innerText = url;
@@ -562,7 +564,7 @@
                         systemVersion = document.getElementById('systemVersion').checked? '&showVersion=1' : '';
                     if(manifestUrl && nameType){
                         results.classList.remove('d-none');
-                        const url = `https://img.shields.io/endpoint?url=${encodeURIComponent(`https://foundryshields.com/system?nameType=${nameType}${systemVersion}&style=${badgeStyle}&url=${manifestUrl}`)}`;
+                        const url = `https://img.shields.io/endpoint?url=${encodeURIComponent(`${domain}/system?nameType=${nameType}${systemVersion}&style=${badgeStyle}&url=${manifestUrl}`)}`;
                         const text = results.querySelector('div');
                         if(text){
                             text.innerText = url;

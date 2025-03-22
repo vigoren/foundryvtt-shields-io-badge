@@ -1,5 +1,4 @@
 import {MethodTypes} from "./constants";
-import express from "express";
 
 export namespace FoundryVTT {
 
@@ -111,26 +110,4 @@ export interface ShieldIOResponse {
     logoPosition?: string;
     style?: string;
     cacheSeconds?: number;
-}
-
-/**
- * A routh method
- */
-export interface Method {
-    /**
-     * The method type
-     */
-    type: MethodTypes;
-    /**
-     * The method key, this makes up the root of the URL /api/{key}
-     */
-    key: string;
-    /**
-     * Any URL parameters to append onto the end of the root
-     */
-    parameters: string;
-    /**
-     * The call back function when the route is triggered.
-     */
-    callback: express.RequestHandler;
 }
