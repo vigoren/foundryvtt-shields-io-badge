@@ -1,7 +1,6 @@
 import {FoundryGrey, FoundryOrange, FoundrySVG} from "../constants.js";
 import {FoundryVTT, ShieldIOResponse, SystemNames} from "../interfaces";
 import {parseModuleUrl, parseBadgeStyle, parseVersionCompatibilityObject, generateVersionLabel, getModuleJson} from "../utilities.js";
-import {Logging} from "../logger";
 
 
 const systemPrettyNames: Record<string, SystemNames> = {
@@ -111,7 +110,7 @@ function getSystemMinimumVersion(moduleJson: FoundryVTT.Manifest.Json | FoundryV
 }
 
 
-export async function system(req: Request, logger: Logging){
+export async function system(req: Request){
     const shieldIo: ShieldIOResponse = {
         schemaVersion: 1,
         label: 'Supported Game System',
@@ -123,7 +122,7 @@ export async function system(req: Request, logger: Logging){
     };
     let moduleUrl = parseModuleUrl(req);
     if(moduleUrl){
-        logger.info(`Loading Data From: ${moduleUrl}`, {badgeData: {type: "SYSTEM", url: moduleUrl}, context: {}});
+        console.info(`[SYSTEM] Loading data from: ${moduleUrl}`);
         const moduleJson = await getModuleJson(moduleUrl);
         // @ts-ignore
         delete moduleJson['compatibility']; //We don't need to know the modules own compatibility when checking system data
@@ -164,5 +163,5 @@ export async function system(req: Request, logger: Logging){
     if(shieldIo.message === '') {
         shieldIo.message = 'Error getting information.';
     }
-    return new Response(JSON.stringify(shieldIo), { status: 200, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age:300'} });
+    return new Response(JSON.stringify(shieldIo), { status: 200, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=300'} });
 }

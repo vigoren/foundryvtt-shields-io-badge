@@ -1,5 +1,15 @@
 # Change Log
 
+## 2.0.0 - Moved to bunny.net Edge Scripting
+
+- The service now runs as a standalone bunny.net Edge Script instead of a Cloudflare Pages Function. The landing page, sitemap and example manifests are bundled into the script.
+- Removed Logtail logging; request logs go to the console (visible in the bunny.net dashboard).
+- Fixed the `Cache-Control` header on badge responses, which used `max-age:300` instead of `max-age=300` and so was never honoured by caches.
+- Static files are now served with a one hour `Cache-Control` header.
+- Vite serves as both the local dev server (`npm run dev`) and the edge bundler (`npm run build`).
+- Added a Vitest suite covering the routes and static files.
+- Updated all dependencies to their latest versions and pinned them.
+
 ## 1.2.3 - Dependency Update
 
 - Updated the dependencies used by foundry shields.

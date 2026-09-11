@@ -10,3 +10,43 @@ This project is hosted at [https://foundryshields.com/](https://foundryshields.c
 
 Alternatively, you can use this repository to host your own instance if you would prefer.
 
+
+## Hosting your own instance
+
+The service runs as a standalone [bunny.net Edge Script](https://bunny.net/docs/scripting/standalone/overview). Everything, including the landing page and the example manifests, is bundled into a single script, so there is no origin server or storage zone to set up.
+
+### Requirements
+
+- Node.js 22.12 or newer
+- A bunny.net account (for deploying only)
+
+### Running locally
+
+```shell
+npm install
+npm run dev
+```
+
+This starts a Vite dev server (default `http://localhost:5173`) that routes every request through the same handler that runs on the edge, so `/`, `/version?url=...` and `/system?url=...` all behave as they do in production. Edits under `src/` are picked up on the next request.
+
+### Tests and type checking
+
+```shell
+npm test
+npm run typecheck
+```
+
+### Building and deploying
+
+```shell
+npm run build
+```
+
+This writes a single ESM bundle to `dist/index.js`. To deploy it, create a standalone Edge Script in the bunny.net dashboard (or with `npx bunny scripts init`), link this directory to it once, then push a build:
+
+```shell
+npx bunny scripts link
+npm run deploy
+```
+
+`bunny scripts link` writes the script id to `.bunny/script.json`, which is git-ignored. Custom hostnames are added with `npx bunny scripts domains add example.com`.

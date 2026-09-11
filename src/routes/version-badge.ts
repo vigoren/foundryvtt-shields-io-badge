@@ -1,10 +1,9 @@
 import {FoundryGrey, FoundryOrange, FoundrySVG} from "../constants.js";
 import {ShieldIOResponse, VersionData} from "../interfaces";
 import {parseModuleUrl, parseBadgeStyle, parseVersionCompatibilityObject, generateVersionLabel, getModuleJson} from "../utilities.js";
-import {Logging} from "../logger";
 
 
-export async function version(req: Request, logger: Logging){
+export async function version(req: Request){
     const shieldIo: ShieldIOResponse = {
         schemaVersion: 1,
         label: 'Supported Foundry Version',
@@ -16,7 +15,7 @@ export async function version(req: Request, logger: Logging){
     };
     let moduleUrl = parseModuleUrl(req);
     if(moduleUrl){
-        logger.info(`Loading Data From: ${moduleUrl}`, {badgeData: {type: "VERSION", url: moduleUrl}});
+        console.info(`[VERSION] Loading data from: ${moduleUrl}`);
         const moduleJson = await getModuleJson(moduleUrl);
         let parsedVersion: VersionData = {minimum: '', compatible: ''};
 
@@ -42,5 +41,5 @@ export async function version(req: Request, logger: Logging){
         shieldIo.message = 'Error getting information.';
     }
 
-    return new Response(JSON.stringify(shieldIo), { status: 200, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age:300'} });
+    return new Response(JSON.stringify(shieldIo), { status: 200, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=300'} });
 }
